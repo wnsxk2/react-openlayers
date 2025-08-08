@@ -1,17 +1,24 @@
 // src/routes/AppRouter.tsx
+import MainLayout from '@/layouts/MainLayout';
+import MapLayout from '@/layouts/MapLayout';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import MainLayout from '@/shared/ui/layouts/MainLayout';
 // Lazy load pages
 const Home = lazy(() => import('@/pages/Home'));
+const Map = lazy(() => import('@/pages/Map'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/main',
     element: <MainLayout />,
     children: [{ index: true, element: <Home /> }],
+  },
+  {
+    path: '/',
+    element: <MapLayout />,
+    children: [{ index: true, element: <Map /> }],
   },
   {
     path: '*',
