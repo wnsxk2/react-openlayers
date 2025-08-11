@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
+import { colors } from '@/shared/styles';
 
 interface SlideMenuProps {
   isOpen?: boolean;
@@ -40,12 +41,12 @@ const slideMenuStyles = css`
   left: 0;
   width: 280px;
   height: 100vh;
-  background-color: #fff;
-  border-right: 1px solid #e0e0e0;
+  background-color: ${colors.backgroundLight};
+  border-right: 1px solid ${colors.borderLight};
   transform: translateX(0);
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 8px ${colors.shadowLight};
 `;
 
 const hiddenStyles = css`
@@ -57,8 +58,8 @@ const toggleButtonStyles = css`
   top: 50%;
   width: 30px;
   height: 60px;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
+  background-color: ${colors.backgroundLight};
+  border: 1px solid ${colors.borderLight};
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   cursor: pointer;
@@ -66,11 +67,11 @@ const toggleButtonStyles = css`
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  color: #666;
+  color: ${colors.textSecondary};
   z-index: 1001;
   transform: translate(280px, -50%);
   transition: transform 0.3s ease-in-out, box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px ${colors.shadowLight};
 `;
 
 const toggleButtonCollapsedStyles = css`

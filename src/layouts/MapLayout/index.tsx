@@ -2,6 +2,7 @@ import SlideMenu from '@/shared/ui/SlideMenu';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { colors } from '@/shared/styles';
 
 export default function MapLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
@@ -31,7 +32,7 @@ const layoutStyles = ({
   display: flex;
   flex-direction: row;
   height: 100vh;
-  background-color: ${isDarkMode ? '#1a1a1a' : '#ffffff'};
+  background-color: ${isDarkMode ? colors.backgroundDark : colors.backgroundLight};
 `;
 
 const mainStyles = ({
@@ -44,8 +45,8 @@ const mainStyles = ({
   flex: 1;
   min-height: 100vh;
   position: relative;
-  color: ${isDarkMode ? '#ffffff' : '#000000'};
-  background-color: ${isDarkMode ? '#1a1a1a' : '#ffffff'};
+  color: ${isDarkMode ? colors.white : colors.black};
+  background-color: ${isDarkMode ? colors.backgroundDark : colors.backgroundLight};
   transition: margin-left 0.3s ease-in-out;
   margin-left: ${isMenuOpen ? '280px' : '0px'};
 `;
