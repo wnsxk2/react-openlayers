@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default function HomePage() {
   const handleButtonClick = async () => {
-    const { data } = await axios.get('/api/users');
+    const { data } = await axios.post('/api/v1/auth/id', { id: 'nasssdf' });
     console.log('data : ', data);
   };
   return (
