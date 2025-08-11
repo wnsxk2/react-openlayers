@@ -1,28 +1,35 @@
 // src/routes/AppRouter.tsx
-import MainLayout from '@/layouts/MainLayout';
-import MapLayout from '@/layouts/MapLayout';
-import { lazy, Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainLayout from "@/layouts/MainLayout";
+import MapLayout from "@/layouts/MapLayout";
+import LoginLayout from "@/layouts/LoginLayout";
+import { lazy, Suspense } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Lazy load pages
-const Home = lazy(() => import('@/pages/Home'));
-const Map = lazy(() => import('@/pages/Map'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
+const Home = lazy(() => import("@/pages/Home"));
+const Map = lazy(() => import("@/pages/Map"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const Login = lazy(() => import("@/pages/Auth/Login"));
 
 const router = createBrowserRouter([
   {
-    path: '/main',
+    path: "/main",
     element: <MainLayout />,
     children: [{ index: true, element: <Home /> }],
   },
   {
-    path: '/',
+    path: "/",
     element: <MapLayout />,
     children: [{ index: true, element: <Map /> }],
   },
   {
-    path: '*',
+    path: "*",
     element: <NotFound />,
+  },
+  {
+    path: "/login",
+    element: <LoginLayout />,
+    children: [{ index: true, element: <Login /> }],
   },
 ]);
 
