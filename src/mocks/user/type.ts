@@ -19,3 +19,13 @@ export type Signup = {
   username: string;
   tel: string;
 };
+
+export type Login = {
+  id: string;
+  password: string;
+};
+
+export type Tokens = {
+  accessToken: string;
+  refreshToken: string;
+};

@@ -1,6 +1,9 @@
-import type { ErrorResponseDTO, ResponseDTO } from '@/mocks/user/type';
+import type { ErrorResponseDTO, ResponseDTO, Tokens } from '@/mocks/user/type';
 import { HttpResponse } from 'msw';
 
+/**
+ * 아이디 중복 확인 DTO
+ */
 type IdCheckResponse = {
   id: string;
   message: string;
@@ -19,6 +22,9 @@ export function createIdCheckResponse(
   return HttpResponse.json(response);
 }
 
+/**
+ * 회원가입 DTO
+ */
 type SignupResponse = {
   id: string;
   username: string;
@@ -32,6 +38,25 @@ export function createSignupResponse(id: string, username: string): Response {
   return HttpResponse.json(response);
 }
 
+/**
+ * 로그인 DTO
+ */
+type LoginResponse = {
+  id: string;
+  tokens: Tokens;
+};
+
+export function createLoginResponse(id: string, tokens: Tokens): Response {
+  const response: ResponseDTO<LoginResponse> = {
+    success: true,
+    data: { id, tokens },
+  };
+  return HttpResponse.json(response);
+}
+
+/**
+ * Error DTO
+ */
 export function createErrorResponse(message: string, status: number): Response {
   const response: ErrorResponseDTO = {
     success: false,

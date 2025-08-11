@@ -1,10 +1,11 @@
-import { EXIST_IDS } from '@/mocks/user/constant';
+import { EXIST_IDS as EXIST_USER } from '@/mocks/user/constant';
 import {
   createErrorResponse,
   createIdCheckResponse,
+  createLoginResponse,
   createSignupResponse,
 } from '@/mocks/user/dto';
-import type { Signup } from '@/mocks/user/type';
+import type { Login, Signup, Tokens } from '@/mocks/user/type';
 import { http } from 'msw';
 
 export const userHandlers = [
@@ -15,7 +16,9 @@ export const userHandlers = [
 
       const { id } = body as { id: string };
 
-      const isAvailable = !EXIST_IDS.includes(id.toLowerCase());
+      const isAvailable = !EXIST_USER.find(
+        (user) => user.id.toLowerCase() === id.toLowerCase()
+      );
       const message = isAvailable
         ? '사용 가능한 아이디입니다.'
         : '이미 존재하는 아이디입니다.';
@@ -26,6 +29,7 @@ export const userHandlers = [
       return createErrorResponse('서버 내부 오류가 발생했습니다.', 500);
     }
   }),
+  // 회원가입 api
   http.post('api/v1/auth/signup', async ({ request }) => {
     try {
       const body = await request.json().catch(() => null);
@@ -43,12 +47,18 @@ export const userHandlers = [
 
       // 아이디 유효성 검사
       if (id.length < 4 || id.length > 20) {
-        return createErrorResponse('아이디는 4자 이상 20자 이하여야 합니다.', 400);
+        return createErrorResponse(
+          '아이디는 4자 이상 20자 이하여야 합니다.',
+          400
+        );
       }
 
       // 비밀번호 유효성 검사
       if (password.length < 8 || password.length > 20) {
-        return createErrorResponse('비밀번호는 8자 이상 20자 이하여야 합니다.', 400);
+        return createErrorResponse(
+          '비밀번호는 8자 이상 20자 이하여야 합니다.',
+          400
+        );
       }
 
       // 이메일 형식 검증
@@ -65,15 +75,55 @@ export const userHandlers = [
 
       // 사용자명 길이 검증
       if (username.length < 2 || username.length > 10) {
-        return createErrorResponse('사용자명은 2자 이상 10자 이하여야 합니다.', 400);
+        return createErrorResponse(
+          '사용자명은 2자 이상 10자 이하여야 합니다.',
+          400
+        );
       }
 
-      const isAvailable = !EXIST_IDS.includes(id.toLowerCase());
+      const isAvailable = !EXIST_USER.find(
+        (user) => user.id.toLowerCase() === id.toLowerCase()
+      );
 
       if (!isAvailable) {
         return createErrorResponse('이미 존재하는 아이디입니다.', 409);
       }
+
+      EXIST_USER.push({
+        id,
+        password,
+      });
+
       return createSignupResponse(id, username);
+    } catch (error) {
+      console.error(error);
+      return createErrorResponse('서버 내부 오류가 발생했습니다.', 500);
+    }
+  }),
+
+  // 로그인 api
+  http.post('/api/v1/auth/login', async ({ request }) => {
+    try {
+      const body = await request.json().catch(() => null);
+
+      const { id, password } = body as Login;
+
+      const isSuccess = EXIST_USER.find((user) => {
+        return user.id === id && user.password === password;
+      });
+
+      if (!isSuccess) {
+        return createErrorResponse(
+          '아이디 또는 비밀번호가 잘못되었습니다. 다시 시도하세요.',
+          401
+        );
+      }
+      const tokens: Tokens = {
+        accessToken: 'test-access-token',
+        refreshToken: 'test-refresh-token',
+      };
+
+      return createLoginResponse(id, tokens);
     } catch (error) {
       console.error(error);
       return createErrorResponse('서버 내부 오류가 발생했습니다.', 500);
