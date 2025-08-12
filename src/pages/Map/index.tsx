@@ -1,4 +1,5 @@
 import { colors } from '@/shared/styles';
+import MenuButton from '@/shared/ui/MenuButton';
 import { css } from '@emotion/react';
 import { IoMenuOutline } from 'react-icons/io5';
 
@@ -13,10 +14,15 @@ export default function MapPage() {
       >
         <IoMenuOutline />
       </button>
+      <MenuButton customCSS={menuButtonPosition} />
       <div>index</div>
     </div>
   );
 }
+const menuButtonPosition = css`
+  top: 50px;
+  right: 15px;
+`;
 
 const menuBtn = css`
   width: 30px;
