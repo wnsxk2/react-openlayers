@@ -1,14 +1,17 @@
-import { colors } from '@/shared/styles';
-import { css } from '@emotion/react';
-import { IoMenuOutline } from 'react-icons/io5';
+import { colors } from "@/shared/styles";
+import { css } from "@emotion/react";
+import { IoMenuOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 export default function MapPage() {
+  const navigate = useNavigate();
   return (
     <div>
       <button
         css={menuBtn}
         onClick={() => {
-          console.log('Clicked menu');
+          console.log("Clicked menu");
+          navigate("/login");
         }}
       >
         <IoMenuOutline />
