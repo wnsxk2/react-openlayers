@@ -11,7 +11,7 @@ const Home = lazy(() => import("@/pages/Home"));
 const Map = lazy(() => import("@/pages/Map"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const Login = lazy(() => import("@/pages/Login"));
-//const SignUp = lazy(() => import("@/pages/SignUp"))
+const SignUp = lazy(() => import("@/pages/SignUp"))
 
 const router = createBrowserRouter([
   {
@@ -33,11 +33,11 @@ const router = createBrowserRouter([
     element: <LoginLayout />,
     children: [{ index: true, element: <Login /> }],
   },
-  // {
-  //   path: "/signup",
-  //   element: <SignUpLayout />,
-  //   children: [{ index: true, element: <SignUp /> }],
-  // },
+  {
+    path: "/signup",
+    element: <SignUpLayout />,
+    children: [{ index: true, element: <SignUp /> }],
+  },
 ]);
 
 export default function AppRouter() {

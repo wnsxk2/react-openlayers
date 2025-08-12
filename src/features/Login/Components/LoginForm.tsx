@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../Hooks/useLogin.ts";
 import { Link } from "react-router-dom";
-// import { EXIST_IDS as EXIST_USER } from '@/mocks/user/constant'; // 테스트 계정 목록
 
 export default function LoginForm() {
   const navigate = useNavigate();
