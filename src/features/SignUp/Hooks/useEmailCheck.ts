@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useEmailCheck = () => {
   const [emailCheckResult, setEmailCheckResult] = useState<{
@@ -18,7 +18,7 @@ export const useEmailCheck = () => {
 
     if (!validateEmail(value.trim())) {
       setEmailCheckResult({
-        message: "올바른 이메일 양식으로 작성해주세요.",
+        message: '올바른 이메일 양식으로 작성해주세요.',
       });
     } else {
       setEmailCheckResult(null);

@@ -1,7 +1,7 @@
-import { loginApi } from "../Api/loginApi";
-import { useState } from "react";
-import { type LoginRequest } from "../Types/types";
-import { useNavigate } from "react-router-dom";
+import { loginApi } from '../Api/loginApi';
+import { useState } from 'react';
+import { type LoginRequest } from '../Types/types';
+import { useNavigate } from 'react-router-dom';
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -15,11 +15,11 @@ export function useLogin() {
 
       const response = await loginApi.login(credentials);
 
-      localStorage.setItem("accessToken", response.data.tokens.accessToken);
-      localStorage.setItem("refreshToken", response.data.tokens.refreshToken);
-      navigate("/");
+      localStorage.setItem('accessToken', response.data.tokens.accessToken);
+      localStorage.setItem('refreshToken', response.data.tokens.refreshToken);
+      navigate('/');
     } catch (err) {
-      setError("로그인 중 오류가 발생했습니다.");
+      setError('로그인 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }

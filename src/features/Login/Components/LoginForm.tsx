@@ -1,14 +1,14 @@
-import { css } from "@emotion/react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLogin } from "../Hooks/useLogin.ts";
-import { Link } from "react-router-dom";
+import { css } from '@emotion/react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../Hooks/useLogin.ts';
+import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const { login, loading, error } = useLogin();
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
   const [inputErrors, setInputErrors] = useState<{
     id?: string;
     password?: string;
@@ -19,10 +19,10 @@ export default function LoginForm() {
     const inputErrors: { id?: string; password?: string } = {};
 
     if (!id.trim()) {
-      inputErrors.id = "아이디를 입력해주세요.";
+      inputErrors.id = '아이디를 입력해주세요.';
     }
     if (!password.trim()) {
-      inputErrors.password = "비밀번호를 입력해주세요.";
+      inputErrors.password = '비밀번호를 입력해주세요.';
     }
 
     setInputErrors(inputErrors);
@@ -33,7 +33,7 @@ export default function LoginForm() {
   };
 
   const handleSignUp = () => {
-    navigate("/signup");
+    navigate('/signup');
   };
 
   return (
@@ -42,31 +42,31 @@ export default function LoginForm() {
         <p css={loginText}>로그인</p>
         <p css={loginSubText}>로그인하시고 나만의 즐겨찾기를 이용해보세요</p>
         <input
-          type="text"
+          type='text'
           value={id}
           onChange={(e) => setId(e.target.value)}
           css={[infoInputField, inputErrors.id && errorField]}
-          placeholder="아이디를 입력하세요."
+          placeholder='아이디를 입력하세요.'
         ></input>
         {inputErrors.id && <span css={errorMessage}>{inputErrors.id}</span>}
 
         <input
-          type="password"
+          type='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           css={[infoInputField, inputErrors.password && errorField]}
-          placeholder="비밀번호를 입력하세요."
+          placeholder='비밀번호를 입력하세요.'
         ></input>
         {inputErrors.password && (
           <span css={errorMessage}>{inputErrors.password}</span>
         )}
 
         <div css={loginButtonContainer}>
-          <button type="submit" disabled={loading} css={loginButton}>
-            {loading ? "로그인 중..." : "로그인"}
+          <button type='submit' disabled={loading} css={loginButton}>
+            {loading ? '로그인 중...' : '로그인'}
           </button>
           <button
-            type="button"
+            type='button'
             onClick={handleSignUp}
             disabled={loading}
             css={signUpButton}
@@ -74,7 +74,7 @@ export default function LoginForm() {
             회원가입
           </button>
         </div>
-        <Link to="/" css={loginCancelText}>
+        <Link to='/' css={loginCancelText}>
           돌아가기
         </Link>
         {error && <div css={serverErrorMessage}>{error}</div>}

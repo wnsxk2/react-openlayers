@@ -1,9 +1,9 @@
-import { css } from "@emotion/react";
-import { Link } from "react-router-dom";
-import { useIdCheck } from "../Hooks/useIdCheck.ts";
-import { usePasswordCheck } from "../Hooks/usePasswordCheck.ts";
-import { useEmailCheck } from "../Hooks/useEmailCheck.ts";
-import { useSignUpFormCheck } from "../Hooks/useSignUpFormCheck.ts";
+import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
+import { useIdCheck } from '../Hooks/useIdCheck.ts';
+import { usePasswordCheck } from '../Hooks/usePasswordCheck.ts';
+import { useEmailCheck } from '../Hooks/useEmailCheck.ts';
+import { useSignUpFormCheck } from '../Hooks/useSignUpFormCheck.ts';
 
 export default function SignUp() {
   const { idCheckResult, handleIdCheck } = useIdCheck();
@@ -46,14 +46,14 @@ export default function SignUp() {
         </p>
         <div>
           <input
-            type="text"
+            type='text'
             value={id}
             onChange={(e) => setId(e.target.value)}
             css={infoInputField}
-            placeholder="아이디를 입력해주세요."
+            placeholder='아이디를 입력해주세요.'
           ></input>
           <button
-            type="button"
+            type='button'
             onClick={() => handleIdCheck(id)}
             css={infoCheckButton}
           >
@@ -72,21 +72,21 @@ export default function SignUp() {
 
         <div>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
               if (passwordConfirm) setPasswordConfirm(null);
             }}
             css={infoInputField}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder='비밀번호를 입력해주세요.'
           ></input>
           <button
-            type="button"
+            type='button'
             onClick={() => handlePasswordToggle(password)}
             css={infoCheckButton}
           >
-            {showPassword ? "숨기기" : "보기"}
+            {showPassword ? '숨기기' : '보기'}
           </button>
         </div>
         {passwordConfirm && (
@@ -95,21 +95,21 @@ export default function SignUp() {
 
         <div>
           <input
-            type={showPasswordCheck ? "text" : "password"}
+            type={showPasswordCheck ? 'text' : 'password'}
             value={passwordCheck}
             onChange={(e) => {
               setPasswordCheck(e.target.value);
               if (passwordCheckConfirm) setPasswordCheckConfirm(null);
             }}
             css={infoInputField}
-            placeholder="비밀번호를 다시 입력해주세요."
+            placeholder='비밀번호를 다시 입력해주세요.'
           ></input>
           <button
-            type="button"
+            type='button'
             onClick={() => handlePasswordConfirmToggle(passwordCheck)}
             css={infoCheckButton}
           >
-            {showPasswordCheck ? "숨기기" : "보기"}
+            {showPasswordCheck ? '숨기기' : '보기'}
           </button>
         </div>
         {passwordCheckConfirm && (
@@ -117,43 +117,43 @@ export default function SignUp() {
         )}
 
         <input
-          type="email"
+          type='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onBlur={(e) => handleEmailValidation(e.target.value)}
           css={infoInputField}
-          placeholder="이메일를 입력해주세요."
+          placeholder='이메일를 입력해주세요.'
         ></input>
         {emailCheckResult && (
           <div css={inCorrectFieldMessage}>{emailCheckResult.message}</div>
         )}
 
         <input
-          type="text"
+          type='text'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           css={infoInputField}
-          placeholder="이름을 입력해주세요."
+          placeholder='이름을 입력해주세요.'
         ></input>
 
         <input
-          type="text"
+          type='text'
           value={tel}
           onChange={(e) => setTel(e.target.value)}
           css={infoInputField}
-          placeholder="전화번호를 입력해주세요."
+          placeholder='전화번호를 입력해주세요.'
         ></input>
 
         <button
-          type="button"
+          type='button'
           onClick={() => handleSignUp(idCheckResult)}
           disabled={loading}
           css={signUpButton}
         >
-          {loading ? "가입 중..." : "가입"}
+          {loading ? '가입 중...' : '가입'}
         </button>
 
-        <Link to="/" css={signUpCancelText}>
+        <Link to='/' css={signUpCancelText}>
           돌아가기
         </Link>
 

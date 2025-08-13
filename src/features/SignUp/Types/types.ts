@@ -1,17 +1,17 @@
-export interface IdCheckRequest{
+export interface IdCheckRequest {
   id: string;
 }
 
-export interface IdCheckResponse{
+export interface IdCheckResponse {
   success: true;
   data: {
     id: string;
     message: string;
     available: boolean;
-  }
+  };
 }
 
-export interface SignUpRequest{
+export interface SignUpRequest {
   id: string;
   password: string;
   email: string;
@@ -19,19 +19,18 @@ export interface SignUpRequest{
   tel: string;
 }
 
-export interface SignUpSuccessResponse{
+export interface SignUpSuccessResponse {
   success: true;
   data: {
     id: string;
-    username : string
-  } 
+    username: string;
+  };
 }
 
-export interface ApiErrorResponse{
-    success: false;
-    error: {
-      code: string;
-      message: string;
-    }
-
+export interface ApiErrorResponse {
+  success: false;
+  error: {
+    code: string;
+    message: string;
+  };
 }
