@@ -2,7 +2,7 @@ export const colors = {
   // Primary Colors
   white: '#ffffff',
   black: '#000000',
-  
+
   // Gray Scale
   gray50: '#f9f9f9',
   gray100: '#f5f5f5',
@@ -14,20 +14,25 @@ export const colors = {
   gray700: '#616161',
   gray800: '#424242',
   gray900: '#212121',
-  
+
   // Text Colors
   textPrimary: '#222',
   textSecondary: '#666',
-  
+
   // Background Colors
   backgroundLight: '#ffffff',
   backgroundDark: '#1a1a1a',
-  
+
   // Border Colors
   borderLight: '#e0e0e0',
-  
+
   // Shadow Colors
   shadowLight: 'rgba(0, 0, 0, 0.1)',
+
+  // Hover Colors
+  buttonHover: '#f0f0f0',
+  // Focus Colors
+  buttonFocus: '#3498db',
 } as const;
 
 export type ColorKey = keyof typeof colors;

@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
+import Map from "@/features/Map/ui/Map";
 import { colors } from "@/shared/styles";
+import MenuButton from "@/shared/ui/MenuButton";
 import { css } from "@emotion/react";
 import { IoMenuOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 
 export default function MapPage() {
   const navigate = useNavigate();
   return (
-    <div>
+    <Map>
       <button
         css={menuBtn}
         onClick={() => {
@@ -16,10 +18,14 @@ export default function MapPage() {
       >
         <IoMenuOutline />
       </button>
-      <div>index</div>
-    </div>
+      <MenuButton customCSS={menuButtonPosition} />
+    </Map>
   );
 }
+const menuButtonPosition = css`
+  top: 50px;
+  right: 15px;
+`;
 
 const menuBtn = css`
   width: 30px;

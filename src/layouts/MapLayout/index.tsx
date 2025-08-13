@@ -32,7 +32,9 @@ const layoutStyles = ({
   display: flex;
   flex-direction: row;
   height: 100vh;
-  background-color: ${isDarkMode ? colors.backgroundDark : colors.backgroundLight};
+  background-color: ${isDarkMode
+    ? colors.backgroundDark
+    : colors.backgroundLight};
 `;
 
 const mainStyles = ({
@@ -42,11 +44,14 @@ const mainStyles = ({
   isMenuOpen: boolean;
   isDarkMode: boolean;
 }) => css`
+  display: flex;
   flex: 1;
   min-height: 100vh;
   position: relative;
   color: ${isDarkMode ? colors.white : colors.black};
-  background-color: ${isDarkMode ? colors.backgroundDark : colors.backgroundLight};
+  background-color: ${isDarkMode
+    ? colors.backgroundDark
+    : colors.backgroundLight};
   transition: margin-left 0.3s ease-in-out;
   margin-left: ${isMenuOpen ? '280px' : '0px'};
 `;
