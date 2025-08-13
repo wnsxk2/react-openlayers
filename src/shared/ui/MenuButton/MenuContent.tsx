@@ -12,7 +12,7 @@ export default function MenuContent({ isOpen }: MenuContentProps) {
   return (
     <div css={[contentWrapper, !isOpen && contentWrapperHidden]}>
       {labels.map((label) => (
-        <MenuItem label={label} onClick={() => {}} />
+        <MenuItem key={label} label={label} onClick={() => {}} />
       ))}
     </div>
   );
