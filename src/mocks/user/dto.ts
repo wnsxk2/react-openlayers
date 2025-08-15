@@ -1,4 +1,5 @@
-import type { ErrorResponseDTO, ResponseDTO, Tokens } from '@/mocks/user/type';
+import type { ResponseDTO } from '@/mocks/shared/type';
+import type { Tokens } from '@/mocks/user/type';
 import { HttpResponse } from 'msw';
 
 /**
@@ -52,15 +53,4 @@ export function createLoginResponse(id: string, tokens: Tokens): Response {
     data: { id, tokens },
   };
   return HttpResponse.json(response);
-}
-
-/**
- * Error DTO
- */
-export function createErrorResponse(message: string, status: number): Response {
-  const response: ErrorResponseDTO = {
-    success: false,
-    error: { code: status, message },
-  };
-  return HttpResponse.json(response, { status });
 }

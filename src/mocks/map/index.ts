@@ -1,6 +1,6 @@
 import { points } from '@/mocks/map/constant';
 import { createPointListResponse } from '@/mocks/map/dto';
-import { createErrorResponse } from '@/mocks/user/dto';
+import { createErrorResponse } from '@/mocks/shared/dto';
 import { http } from 'msw';
 
 export const mapHandlers = [

@@ -1,5 +1,6 @@
 import type { GeoJson, PointInfo } from '@/mocks/map/type';
-import type { ResponseDTO } from '@/mocks/user/type';
+import type { ResponseDTO } from '@/mocks/shared/type';
+
 import { HttpResponse } from 'msw';
 
 /**
