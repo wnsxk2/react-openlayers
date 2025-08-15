@@ -25,6 +25,12 @@ export default function HomePage() {
     });
     console.log('data : ', data);
   };
+
+  const handleGetPointButtomClick = async () => {
+    const { data } = await axios.get('/api/v1/map/point');
+    console.log('data : ', data);
+  };
+
   return (
     <div>
       <h1 css={test}>🏠 Home Page</h1>
@@ -37,6 +43,10 @@ export default function HomePage() {
         </button>
         <button css={btn} onClick={handleIdCheckButtonClick}>
           아이디 중복 확인
+        </button>
+
+        <button css={btn} onClick={handleGetPointButtomClick}>
+          포인트 위치 정보 가져오기
         </button>
       </div>
     </div>
