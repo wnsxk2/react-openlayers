@@ -1,6 +1,6 @@
+import { createErrorResponse } from '@/mocks/shared/dto';
 import { EXIST_IDS as EXIST_USER } from '@/mocks/user/constant';
 import {
-  createErrorResponse,
   createIdCheckResponse,
   createLoginResponse,
   createSignupResponse,
