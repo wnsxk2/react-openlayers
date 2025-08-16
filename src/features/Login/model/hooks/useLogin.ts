@@ -1,6 +1,6 @@
-import { loginApi } from '../Api/loginApi';
+import { loginApi } from '../api/loginApi';
 import { useState } from 'react';
-import { type LoginRequest } from '../Types/types';
+import { type LoginRequest } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 export function useLogin() {

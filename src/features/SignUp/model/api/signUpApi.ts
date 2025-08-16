@@ -5,7 +5,7 @@ import {
   type SignUpSuccessResponse,
   type SignUpRequest,
   type ApiErrorResponse,
-} from '../Types/types';
+} from '../types';
 
 export const signUpApi = {
   idCheck: async (request: IdCheckRequest): Promise<IdCheckResponse> => {

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLogin } from '../Hooks/useLogin.ts';
+import { useLogin } from '../model/hooks/useLogin.ts';
 import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
