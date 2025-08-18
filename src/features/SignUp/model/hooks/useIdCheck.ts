@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { signUpApi } from '../Api/signUpApi';
+import { signUpApi } from '../api/signUpApi';
 
 export const useIdCheck = () => {
   const [idCheckResult, setIdCheckResult] = useState<{

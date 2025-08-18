@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signUpApi } from '../Api/signUpApi';
-import type { SignUpRequest } from '../Types/types';
+import { signUpApi } from '../api/signUpApi';
+import type { SignUpRequest } from '../types';
 
 export const useSignUpFormCheck = () => {
   const navigate = useNavigate();

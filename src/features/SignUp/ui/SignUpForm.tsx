@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import { useIdCheck } from '../Hooks/useIdCheck.ts';
-import { usePasswordCheck } from '../Hooks/usePasswordCheck.ts';
-import { useEmailCheck } from '../Hooks/useEmailCheck.ts';
-import { useSignUpFormCheck } from '../Hooks/useSignUpFormCheck.ts';
+import { useIdCheck } from '../model/hooks/useIdCheck.ts';
+import { usePasswordCheck } from '../model/hooks/usePasswordCheck.ts';
+import { useEmailCheck } from '../model/hooks/useEmailCheck.ts';
+import { useSignUpFormCheck } from '../model/hooks/useSignUpFormCheck.ts';
 
 export default function SignUp() {
   const { idCheckResult, handleIdCheck } = useIdCheck();

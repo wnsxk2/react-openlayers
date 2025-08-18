@@ -3,7 +3,7 @@ import {
   type LoginRequest,
   type LoginSuccessResponse,
   type LoginErrorResponse,
-} from '../Types/types';
+} from '../types';
 
 export const loginApi = {
   login: async (credentials: LoginRequest): Promise<LoginSuccessResponse> => {
