@@ -6,9 +6,16 @@ import { colors } from '@/shared/styles';
 interface SlideMenuProps {
   isOpen?: boolean;
   onToggle?: (isOpen: boolean) => void;
+  isDarkRasterVisible?: boolean;
+  onDarkRasterToggle?: () => void;
 }
 
-export default function SlideMenu({ isOpen = true, onToggle }: SlideMenuProps) {
+export default function SlideMenu({
+  isOpen = true,
+  onToggle,
+  isDarkRasterVisible = false,
+  onDarkRasterToggle,
+}: SlideMenuProps) {
   const [internalOpen, setInternalOpen] = useState(isOpen);
 
   const currentOpen = onToggle ? isOpen : internalOpen;
@@ -23,7 +30,23 @@ export default function SlideMenu({ isOpen = true, onToggle }: SlideMenuProps) {
 
   return (
     <>
-      <aside css={[slideMenuStyles, !currentOpen && hiddenStyles]}></aside>
+      <aside css={[slideMenuStyles, !currentOpen && hiddenStyles]}>
+        <div css={menuContentStyles}>
+          <h3 css={slideMenuTitle}>레이어 설정</h3>
+
+          <div css={layerCheckSection}>
+            <label css={checkboxLabel}>
+              <input
+                type='checkbox'
+                checked={isDarkRasterVisible}
+                onChange={onDarkRasterToggle}
+                css={layersCheckbox}
+              />
+              <span css={checkboxText}>다크 레스터 레이어</span>
+            </label>
+          </div>
+        </div>
+      </aside>
 
       <button
         css={[toggleButtonStyles, !currentOpen && toggleButtonCollapsedStyles]}
@@ -76,4 +99,51 @@ const toggleButtonStyles = css`
 
 const toggleButtonCollapsedStyles = css`
   transform: translate(0px, -50%);
+`;
+
+const menuContentStyles = css`
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+`;
+
+const slideMenuTitle = css`
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: ${colors.textPrimary};
+  border-bottom: 1px solid ${colors.borderLight};
+  padding-bottom: 12px;
+`;
+
+const layerCheckSection = css`
+  margin-bottom: 24px;
+`;
+
+const checkboxLabel = css`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0;
+
+  &:hover {
+    background-color: ${colors.gray50};
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+`;
+
+const layersCheckbox = css`
+  margin-right: 12px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;
+
+const checkboxText = css`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${colors.textSecondary};
+  user-select: none;
 `;

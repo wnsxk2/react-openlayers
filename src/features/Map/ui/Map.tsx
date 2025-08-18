@@ -1,4 +1,4 @@
-import useMap from '@/features/Map/model/hooks/useMap';
+import { useMapContext } from '@/features/Map/model/context/mapContext';
 import MapSelector from '@/features/Map/ui/MapSelector';
 import { css } from '@emotion/react';
 import { type PropsWithChildren, useEffect, useRef, useState } from 'react';
@@ -7,10 +7,16 @@ import ZoomSlider from 'ol/control/ZoomSlider';
 import Zoom from 'ol/control/Zoom';
 
 export default function Map({ children }: PropsWithChildren) {
-  const { mapRef, mapType, setMapType, mapInstance, isMapReady } = useMap();
+  const {
+    mapRef,
+    mapType,
+    setMapType,
+    mapInstance,
+    isMapReady,
+    isDarkRasterVisible,
+  } = useMapContext();
   const zoomSliderControlRef = useRef<ZoomSlider | null>(null);
   const zoomControlRef = useRef<Zoom | null>(null);
-  //const scaleLineControlRef = useRef<ScaleLine | null>(null);
   const [scaleText, setScaleText] = useState<string>('');
 
   useEffect(() => {
@@ -27,16 +33,6 @@ export default function Map({ children }: PropsWithChildren) {
       mapInstance.addControl(zoomControl);
       zoomControlRef.current = zoomControl;
     }
-
-    // if (!scaleLineControlRef.current) {
-    //   const scaleLineControl = new ScaleLine({
-    //     units: 'metric',
-    //     bar: false,
-    //     text: true,
-    //   });
-    //   mapInstance.addControl(scaleLineControl);
-    //   scaleLineControlRef.current = scaleLineControl;
-    // }
 
     const updateScale = () => {
       const view = mapInstance.getView();
@@ -64,16 +60,12 @@ export default function Map({ children }: PropsWithChildren) {
         mapInstance.removeControl(zoomControlRef.current);
         zoomControlRef.current = null;
       }
-      // if (scaleLineControlRef.current && mapInstance) {
-      //   mapInstance.removeControl(scaleLineControlRef.current);
-      //   scaleLineControlRef.current = null;
-      // }
       mapInstance.getView()?.un('change:resolution', updateScale);
     };
   }, [mapInstance, isMapReady]);
 
   return (
-    <div css={mapWrapper}>
+    <div css={mapWrapper(isDarkRasterVisible)}>
       <MapSelector
         mapType={mapType}
         setMap={setMapType}
@@ -86,7 +78,7 @@ export default function Map({ children }: PropsWithChildren) {
   );
 }
 
-const mapWrapper = css`
+const mapWrapper = (isDarkRasterVisible: boolean) => css`
   overflow: hidden;
   flex: 1;
   position: relative;
@@ -186,19 +178,6 @@ const mapWrapper = css`
     transform: translateX(-50%);
   }
 
-  // .ol-scale-line {
-  //   position: absolute !important;
-  //   bottom: 20px;
-  //   right: 20px;
-  //   //background-color: ${colors.white};
-  //   border-radius: 4px;
-  //   padding: 4px 8px;
-  //   //border: 1px solid ${colors.borderLight};
-  //   font-size: 12px;
-  //   font-weight: 500;
-  //   color: ${colors.gray700};
-  //   //backdrop-filter: blur(4px);
-  // }
   .scale-display {
     position: absolute;
     bottom: 20px;
@@ -207,9 +186,10 @@ const mapWrapper = css`
     padding: 4px 12px;
     font-size: 14px;
     font-weight: 500;
-    color: ${colors.gray800};
+    color: ${isDarkRasterVisible ? colors.white : colors.gray800};
     text-align: center;
-    border-bottom: 2px solid ${colors.gray600};
+    border-bottom: 2px solid
+      ${isDarkRasterVisible ? colors.gray200 : colors.gray600};
   }
 `;
 

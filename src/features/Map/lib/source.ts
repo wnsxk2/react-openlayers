@@ -32,3 +32,13 @@ export const getBaseLayerSource = (mapType: MapType) => {
       return new OSM();
   }
 };
+
+// 다크 레스터 레이어
+export const getDarkRasterSource = () => {
+  return new XYZ({
+    url: 'https://cartodb-basemaps-{a-d}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
+    attributions: '© CartoDB, © OpenStreetMap contributors',
+    maxZoom: 19,
+    crossOrigin: 'anonymous',
+  });
+};
