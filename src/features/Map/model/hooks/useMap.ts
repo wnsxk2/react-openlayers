@@ -1,5 +1,12 @@
-import { getBaseLayerSource } from '@/features/Map/lib/source';
-import type { Layers, MapType } from '@/features/Map/model/types';
+import {
+  getBaseLayerSource,
+  getDarkRasterSource,
+} from '@/features/Map/lib/source';
+import type {
+  Layers,
+  MapType,
+  OverlayLayers,
+} from '@/features/Map/model/types';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
@@ -11,15 +18,19 @@ interface UseMapReturn {
   mapType: MapType;
   setMapType: (type: MapType) => void;
   isMapReady: boolean;
+  isDarkRasterVisible: boolean;
+  toggleDarkRaster: () => void;
 }
 
 export default function useMap(): UseMapReturn {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<Map | null>(null);
   const layersRef = useRef<Layers | null>(null);
+  const overlayLayersRef = useRef<OverlayLayers | null>(null);
 
   const [mapType, setCurrentMapType] = useState<MapType>('normal');
   const [isMapReady, setIsMapReady] = useState(false);
+  const [isDarkRasterVisible, setIsDarkRasterVisible] = useState(false);
 
   // Map 초기화
   useEffect(() => {
@@ -40,6 +51,16 @@ export default function useMap(): UseMapReturn {
       visible: mapType === 'terrain',
     });
 
+    const darkRasterLayer = new TileLayer({
+      source: getDarkRasterSource(),
+      visible: false,
+      opacity: 0.7,
+    });
+
+    overlayLayersRef.current = {
+      darkRaster: darkRasterLayer,
+    };
+
     layersRef.current = {
       normal: normalLayer,
       satellite: satelliteLayer,
@@ -49,7 +70,7 @@ export default function useMap(): UseMapReturn {
     mapInstanceRef.current = new Map({
       target: mapRef.current,
       controls: [],
-      layers: [normalLayer, satelliteLayer, terrainLayer],
+      layers: [normalLayer, satelliteLayer, terrainLayer, darkRasterLayer],
       view: new View({
         center: fromLonLat([126.9779, 37.5663]),
         zoom: 12,
@@ -64,6 +85,7 @@ export default function useMap(): UseMapReturn {
         mapInstanceRef.current = null;
       }
       layersRef.current = null;
+      overlayLayersRef.current = null;
       setIsMapReady(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,11 +106,21 @@ export default function useMap(): UseMapReturn {
     layersRef.current[newType].setVisible(true);
   }, []);
 
+  const toggleDarkRaster = () => {
+    if (!overlayLayersRef.current) return;
+
+    const newVisibility = !isDarkRasterVisible;
+    overlayLayersRef.current.darkRaster.setVisible(newVisibility);
+    setIsDarkRasterVisible(newVisibility);
+  };
+
   return {
     mapRef,
     mapInstance: mapInstanceRef.current,
     mapType,
     setMapType,
     isMapReady,
+    isDarkRasterVisible,
+    toggleDarkRaster,
   };
 }

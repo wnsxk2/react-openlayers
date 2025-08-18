@@ -1,12 +1,17 @@
 import SlideMenu from '@/shared/ui/SlideMenu';
+import {
+  MapProvider,
+  useMapContext,
+} from '@/features/Map/model/context/mapContext';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { colors } from '@/shared/styles';
 
-export default function MapLayout() {
+function MapLayoutContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [isDarkMode] = useState(false);
+  const { isDarkRasterVisible, toggleDarkRaster } = useMapContext();
 
   const handleMenuToggle = (isOpen: boolean) => {
     setIsMenuOpen(isOpen);
@@ -14,11 +19,24 @@ export default function MapLayout() {
 
   return (
     <div css={layoutStyles({ isMenuOpen, isDarkMode })}>
-      <SlideMenu isOpen={isMenuOpen} onToggle={handleMenuToggle} />
+      <SlideMenu
+        isOpen={isMenuOpen}
+        onToggle={handleMenuToggle}
+        isDarkRasterVisible={isDarkRasterVisible}
+        onDarkRasterToggle={toggleDarkRaster}
+      />
       <main css={mainStyles({ isMenuOpen, isDarkMode })}>
         <Outlet />
       </main>
     </div>
+  );
+}
+
+export default function MapLayout() {
+  return (
+    <MapProvider>
+      <MapLayoutContent />
+    </MapProvider>
   );
 }
 
