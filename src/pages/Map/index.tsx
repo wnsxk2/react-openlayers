@@ -5,30 +5,23 @@ import MenuButton from '@/shared/ui/MenuButton';
 import { css } from '@emotion/react';
 import { IoMenuOutline } from 'react-icons/io5';
 import { useState } from 'react';
-import SlideMenu from '@/shared/ui/SlideMenu';
 import { useMapContext } from '@/entities/map/model/useMapContext';
 import { MapProvider } from '@/entities/map/model/MapContext';
+import MapSidebar from '@/pages/Map/ui/MapSidebar';
+import { SidebarProvider } from '@/shared/ui/sidebar/SidebarContext';
+import useSidebar from '@/shared/ui/sidebar/useSidebar';
 
 export function MapPageContent() {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const { isOpen } = useSidebar();
   const [isDarkMode] = useState(false);
-
-  const handleMenuToggle = (isOpen: boolean) => {
-    setIsMenuOpen(isOpen);
-  };
 
   const { isDarkRasterVisible, toggleDarkRaster } = useMapContext();
 
   const navigate = useNavigate();
   return (
     <>
-      <SlideMenu
-        isOpen={isMenuOpen}
-        onToggle={handleMenuToggle}
-        isDarkRasterVisible={isDarkRasterVisible}
-        onDarkRasterToggle={toggleDarkRaster}
-      />
-      <main css={mainStyles({ isMenuOpen, isDarkMode })}>
+      <MapSidebar />
+      <main css={mainStyles({ isOpen, isDarkMode })}>
         <Map>
           <button
             css={menuBtn}
@@ -48,9 +41,11 @@ export function MapPageContent() {
 
 export default function MapPage() {
   return (
-    <MapProvider>
-      <MapPageContent />
-    </MapProvider>
+    <SidebarProvider>
+      <MapProvider>
+        <MapPageContent />
+      </MapProvider>
+    </SidebarProvider>
   );
 }
 const menuButtonPosition = css`
@@ -75,10 +70,10 @@ const menuBtn = css`
 `;
 
 const mainStyles = ({
-  isMenuOpen,
+  isOpen,
   isDarkMode,
 }: {
-  isMenuOpen: boolean;
+  isOpen: boolean;
   isDarkMode: boolean;
 }) => css`
   display: flex;
@@ -90,5 +85,5 @@ const mainStyles = ({
     ? colors.backgroundDark
     : colors.backgroundLight};
   transition: margin-left 0.3s ease-in-out;
-  margin-left: ${isMenuOpen ? '280px' : '0px'};
+  margin-left: ${isOpen ? '280px' : '0px'};
 `;
