@@ -1,25 +1,47 @@
-import { useNavigate } from "react-router-dom";
-import Map from "@/features/Map/ui/Map";
-import { colors } from "@/shared/styles";
-import MenuButton from "@/shared/ui/MenuButton";
-import { css } from "@emotion/react";
-import { IoMenuOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
+import Map from '@/features/Map/ui/Map';
+import { colors } from '@/shared/styles';
+import MenuButton from '@/shared/ui/MenuButton';
+import { css } from '@emotion/react';
+import { IoMenuOutline } from 'react-icons/io5';
+import { useState } from 'react';
+import SlideMenu from '@/shared/ui/SlideMenu';
+import { useMapContext } from '@/features/Map/model/context/mapContext';
 
 export default function MapPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isDarkMode] = useState(false);
+
+  const handleMenuToggle = (isOpen: boolean) => {
+    setIsMenuOpen(isOpen);
+  };
+
+  const { isDarkRasterVisible, toggleDarkRaster } = useMapContext();
+
   const navigate = useNavigate();
   return (
-    <Map>
-      <button
-        css={menuBtn}
-        onClick={() => {
-          console.log("Clicked menu");
-          navigate("/login");
-        }}
-      >
-        <IoMenuOutline />
-      </button>
-      <MenuButton customCSS={menuButtonPosition} />
-    </Map>
+    <>
+      <SlideMenu
+        isOpen={isMenuOpen}
+        onToggle={handleMenuToggle}
+        isDarkRasterVisible={isDarkRasterVisible}
+        onDarkRasterToggle={toggleDarkRaster}
+      />
+      <main css={mainStyles({ isMenuOpen, isDarkMode })}>
+        <Map>
+          <button
+            css={menuBtn}
+            onClick={() => {
+              console.log('Clicked menu');
+              navigate('/login');
+            }}
+          >
+            <IoMenuOutline />
+          </button>
+          <MenuButton customCSS={menuButtonPosition} />
+        </Map>
+      </main>
+    </>
   );
 }
 const menuButtonPosition = css`
@@ -41,4 +63,23 @@ const menuBtn = css`
   border: 1px solid ${colors.borderLight};
   border-radius: 50%;
   box-shadow: 2px 0 8px ${colors.shadowLight};
+`;
+
+const mainStyles = ({
+  isMenuOpen,
+  isDarkMode,
+}: {
+  isMenuOpen: boolean;
+  isDarkMode: boolean;
+}) => css`
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  position: relative;
+  color: ${isDarkMode ? colors.white : colors.black};
+  background-color: ${isDarkMode
+    ? colors.backgroundDark
+    : colors.backgroundLight};
+  transition: margin-left 0.3s ease-in-out;
+  margin-left: ${isMenuOpen ? '280px' : '0px'};
 `;
