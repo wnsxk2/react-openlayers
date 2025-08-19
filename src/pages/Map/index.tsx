@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import Map from '@/features/map/ui/Map';
+import Map from '@/features/map/legacy/ui/Map';
 import { colors } from '@/shared/styles';
 import MenuButton from '@/shared/ui/MenuButton';
 import { css } from '@emotion/react';
@@ -10,7 +10,7 @@ import MapSidebar from '@/pages/Map/ui/MapSidebar';
 import { SidebarProvider } from '@/shared/ui/sidebar/SidebarContext';
 import useSidebar from '@/shared/ui/sidebar/useSidebar';
 import MapSelector from '@/pages/Map/ui/MapSelector';
-import { mapItemList } from '@/features/map/constants';
+import { mapItemList } from '@/features/map/legacy/constants';
 
 export function MapPageContent() {
   const { isOpen } = useSidebar();

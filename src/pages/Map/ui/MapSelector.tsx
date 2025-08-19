@@ -1,5 +1,5 @@
 import { useMapContext } from '@/entities/map/model/useMapContext';
-import { mapItemList } from '@/features/map/constants';
+import { mapItemList } from '@/features/map/legacy/constants';
 import BaseLayerSelector from '@/features/map/select-base-layer/ui/BaseLayerSelector';
 import BaseLayerSelectorItem from '@/features/map/select-base-layer/ui/BaseLayerSelectorItem';
 import type { SerializedStyles } from '@emotion/react';

@@ -1,4 +1,4 @@
-import type { MapType } from '@/features/map/model/types';
+import type { MapType } from '@/features/map/legacy/model/types';
 import { OSM, XYZ } from 'ol/source';
 
 // 지도 타입별 베이스 레이어 소스 정의

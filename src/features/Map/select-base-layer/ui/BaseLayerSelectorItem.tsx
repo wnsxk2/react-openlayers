@@ -1,4 +1,4 @@
-import type { MapType } from '@/features/map/model/types';
+import type { MapType } from '@/features/map/legacy/model/types';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 

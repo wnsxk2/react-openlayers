@@ -1,4 +1,4 @@
-import useMap from '@/features/map/model/hooks/useMap';
+import useMap from '@/features/map/legacy/model/hooks/useMap';
 import type { Map } from 'ol';
 import { createContext, type PropsWithChildren } from 'react';
 

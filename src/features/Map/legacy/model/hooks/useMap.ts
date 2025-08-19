@@ -1,8 +1,8 @@
 import {
   getBaseLayerSource,
   getDarkRasterSource,
-} from '@/features/map/lib/source';
-import type { Layers, OverlayLayers } from '@/features/map/model/types';
+} from '@/features/map/legacy/lib/source';
+import type { Layers, OverlayLayers } from '@/features/map/legacy/model/types';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
