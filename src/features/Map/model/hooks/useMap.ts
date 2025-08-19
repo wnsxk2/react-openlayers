@@ -1,12 +1,8 @@
 import {
   getBaseLayerSource,
   getDarkRasterSource,
-} from '@/features/Map/lib/source';
-import type {
-  Layers,
-  MapType,
-  OverlayLayers,
-} from '@/features/Map/model/types';
+} from '@/features/map/lib/source';
+import type { Layers, OverlayLayers } from '@/features/map/model/types';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
@@ -15,8 +11,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 interface UseMapReturn {
   mapRef: React.RefObject<HTMLDivElement | null>;
   mapInstance: Map | null;
-  mapType: MapType;
-  setMapType: (type: MapType) => void;
+  mapType: string;
+  setMapType: (type: string) => void;
   isMapReady: boolean;
   isDarkRasterVisible: boolean;
   toggleDarkRaster: () => void;
@@ -28,7 +24,7 @@ export default function useMap(): UseMapReturn {
   const layersRef = useRef<Layers | null>(null);
   const overlayLayersRef = useRef<OverlayLayers | null>(null);
 
-  const [mapType, setCurrentMapType] = useState<MapType>('normal');
+  const [mapType, setCurrentMapType] = useState<string>('normal');
   const [isMapReady, setIsMapReady] = useState(false);
   const [isDarkRasterVisible, setIsDarkRasterVisible] = useState(false);
 
@@ -92,7 +88,7 @@ export default function useMap(): UseMapReturn {
   }, []);
 
   // Map 타입 변경 함수
-  const setMapType = useCallback((newType: MapType) => {
+  const setMapType = useCallback((newType: string) => {
     setCurrentMapType(newType);
 
     if (!layersRef.current) return;

@@ -1,6 +1,6 @@
-import { mapItemList } from '@/features/Map/constants';
-import type { MapType } from '@/features/Map/model/types';
-import MapSelectorItem from '@/features/Map/ui/MapSelectorItem';
+import { mapItemList } from '@/features/map/constants';
+import type { MapType } from '@/features/map/model/types';
+import MapSelectorItem from '@/features/map/ui/MapSelectorItem';
 import { colors } from '@/shared/styles';
 import { css, type SerializedStyles } from '@emotion/react';
 

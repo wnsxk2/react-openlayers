@@ -1,4 +1,3 @@
-import MapSelector from '@/features/Map/ui/MapSelector';
 import { css } from '@emotion/react';
 import { type PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { colors } from '@/shared/styles';
@@ -7,14 +6,8 @@ import Zoom from 'ol/control/Zoom';
 import { useMapContext } from '@/entities/map/model/useMapContext';
 
 export default function Map({ children }: PropsWithChildren) {
-  const {
-    mapRef,
-    mapType,
-    setMapType,
-    mapInstance,
-    isMapReady,
-    isDarkRasterVisible,
-  } = useMapContext();
+  const { mapRef, mapInstance, isMapReady, isDarkRasterVisible } =
+    useMapContext();
   const zoomSliderControlRef = useRef<ZoomSlider | null>(null);
   const zoomControlRef = useRef<Zoom | null>(null);
   const [scaleText, setScaleText] = useState<string>('');
@@ -66,11 +59,6 @@ export default function Map({ children }: PropsWithChildren) {
 
   return (
     <div css={mapWrapper(isDarkRasterVisible)}>
-      <MapSelector
-        mapType={mapType}
-        setMap={setMapType}
-        customCSS={mapTypeSelector}
-      />
       <div css={mapElement} ref={mapRef} />
       <div className='scale-display'>{scaleText}</div>
       {children}
@@ -196,9 +184,4 @@ const mapWrapper = (isDarkRasterVisible: boolean) => css`
 const mapElement = css`
   width: 100%;
   height: 100%;
-`;
-
-const mapTypeSelector = css`
-  top: 15px;
-  left: 15px;
 `;

@@ -14,4 +14,4 @@ export type OverlayLayers = {
   darkRaster: TileLayer<XYZ>;
 };
 
-export type MapTypeItem = { label: string; type: MapType };
+export type MapTypeItem = { label: string; type: string };

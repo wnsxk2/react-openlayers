@@ -18,7 +18,7 @@ const SidebarContext = createContext<SidebarProps | null>(null);
 
 // 2. Context Provider 컴포넌트 생성
 export function SidebarProvider({ children }: PropsWithChildren) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const openSidebar = () => setIsOpen(true);
   const closeSidebar = () => setIsOpen(false);

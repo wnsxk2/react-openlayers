@@ -1,4 +1,4 @@
-import type { MapTypeItem } from '@/features/Map/model/types';
+import type { MapTypeItem } from '@/features/map/model/types';
 
 export const mapItemList: MapTypeItem[] = [
   { label: '일반', type: 'normal' },

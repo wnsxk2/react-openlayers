@@ -2,18 +2,18 @@ import type { MapType } from '@/features/map/model/types';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 
-interface ItemPops {
+interface BaseLayerSelectorItemProps {
   isActive: boolean;
   type?: MapType;
   label: string;
   onClick: () => void;
 }
 
-export default function MapSelectorItem({
+export default function BaseLayerSelectorItem({
   isActive,
   label,
   onClick,
-}: ItemPops) {
+}: BaseLayerSelectorItemProps) {
   return (
     <button css={button({ isActive })} onClick={onClick}>
       {label}
