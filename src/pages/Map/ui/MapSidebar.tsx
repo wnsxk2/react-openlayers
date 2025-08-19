@@ -1,3 +1,5 @@
+import { useMapContext } from '@/entities/map/model/useMapContext';
+import LayerToggleBtn from '@/features/map/toggle-layer/ui/LayerToggleBtn';
 import { colors } from '@/shared/styles';
 import useSidebar from '@/shared/ui/sidebar/useSidebar';
 import { css } from '@emotion/react';
@@ -5,24 +7,19 @@ import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 
 export default function MapSidebar() {
   const { isOpen, toggleSidebar } = useSidebar();
+
+  const { isDarkRasterVisible, toggleDarkRaster } = useMapContext();
   return (
     <>
       <aside css={[slideMenuStyles, !isOpen && hiddenStyles]}>
-        {/* <div css={menuContentStyles}>
+        <div css={menuContentStyles}>
           <h3 css={slideMenuTitle}>레이어 설정</h3>
-
-          <div css={layerCheckSection}>
-            <label css={checkboxLabel}>
-              <input
-                type='checkbox'
-                checked={isDarkRasterVisible}
-                onChange={onDarkRasterToggle}
-                css={layersCheckbox}
-              />
-              <span css={checkboxText}>다크 레스터 레이어</span>
-            </label>
-          </div>
-        </div> */}
+          <LayerToggleBtn
+            label='다크 레스터 레이어'
+            checked={isDarkRasterVisible}
+            onChange={toggleDarkRaster}
+          />
+        </div>
       </aside>
 
       <button
@@ -91,36 +88,4 @@ const slideMenuTitle = css`
   color: ${colors.textPrimary};
   border-bottom: 1px solid ${colors.borderLight};
   padding-bottom: 12px;
-`;
-
-const layerCheckSection = css`
-  margin-bottom: 24px;
-`;
-
-const checkboxLabel = css`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  padding: 8px 0;
-
-  &:hover {
-    background-color: ${colors.gray50};
-    border-radius: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-`;
-
-const layersCheckbox = css`
-  margin-right: 12px;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-`;
-
-const checkboxText = css`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${colors.textSecondary};
-  user-select: none;
 `;
