@@ -15,9 +15,6 @@ import { mapItemList } from '@/features/map/constants';
 export function MapPageContent() {
   const { isOpen } = useSidebar();
 
-  const { mapType, setMapType, isDarkRasterVisible, toggleDarkRaster } =
-    useMapContext();
-
   const navigate = useNavigate();
   return (
     <>
@@ -34,12 +31,7 @@ export function MapPageContent() {
             <IoMenuOutline />
           </button>
           <MenuButton customCSS={menuButtonPosition} />
-          <MapSelector
-            customCss={mapSelectorStyles}
-            baseLayers={mapItemList}
-            selectedLayer={mapType}
-            onSelect={setMapType}
-          />
+          <MapSelector customCss={mapSelectorStyles} />
         </Map>
       </main>
     </>
