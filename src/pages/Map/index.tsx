@@ -6,9 +6,10 @@ import { css } from '@emotion/react';
 import { IoMenuOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import SlideMenu from '@/shared/ui/SlideMenu';
-import { useMapContext } from '@/features/Map/model/context/mapContext';
+import { useMapContext } from '@/entities/map/model/useMapContext';
+import { MapProvider } from '@/entities/map/model/MapContext';
 
-export default function MapPage() {
+export function MapPageContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [isDarkMode] = useState(false);
 
@@ -42,6 +43,14 @@ export default function MapPage() {
         </Map>
       </main>
     </>
+  );
+}
+
+export default function MapPage() {
+  return (
+    <MapProvider>
+      <MapPageContent />
+    </MapProvider>
   );
 }
 const menuButtonPosition = css`

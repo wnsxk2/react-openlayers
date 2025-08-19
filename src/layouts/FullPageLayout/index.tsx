@@ -1,14 +1,11 @@
-import { MapProvider } from '@/features/Map/model/context/mapContext';
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 
 export default function FullPageLayout() {
   return (
-    <MapProvider>
-      <main css={layoutStyles}>
-        <Outlet />
-      </main>
-    </MapProvider>
+    <main css={layoutStyles}>
+      <Outlet />
+    </main>
   );
 }
 

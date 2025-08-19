@@ -1,10 +1,10 @@
-import { useMapContext } from '@/features/Map/model/context/mapContext';
 import MapSelector from '@/features/Map/ui/MapSelector';
 import { css } from '@emotion/react';
 import { type PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { colors } from '@/shared/styles';
 import ZoomSlider from 'ol/control/ZoomSlider';
 import Zoom from 'ol/control/Zoom';
+import { useMapContext } from '@/entities/map/model/useMapContext';
 
 export default function Map({ children }: PropsWithChildren) {
   const {
