@@ -1,10 +1,10 @@
 // src/routes/AppRouter.tsx
-import MainLayout from '@/layouts/MainLayout';
-import LoginLayout from '@/layouts/LoginLayout';
-import SignUpLayout from '@/layouts/SignUpLayout';
+import MainLayout from '@/shared/ui/layouts/MainLayout';
+import LoginLayout from '@/shared/ui/layouts/LoginLayout';
+import SignUpLayout from '@/shared/ui/layouts/SignUpLayout';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import FullPageLayout from '@/layouts/FullPageLayout';
+import FullPageLayout from '@/shared/ui/layouts/FullPageLayout';
 
 // Lazy load pages
 const Home = lazy(() => import('@/pages/Home'));
