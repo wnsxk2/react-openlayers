@@ -4,12 +4,11 @@ import LoginLayout from '@/shared/ui/layouts/LoginLayout';
 import SignUpLayout from '@/shared/ui/layouts/SignUpLayout';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import FullPageLayout from '@/shared/ui/layouts/FullPageLayout';
 
 // Lazy load pages
 const Home = lazy(() => import('@/pages/Home'));
-const Map = lazy(() => import('@/pages/Map'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
+const MapPage = lazy(() => import('@/pages/map'));
+const NotFound = lazy(() => import('@/pages/not-found'));
 const Login = lazy(() => import('@/pages/Login'));
 const SignUp = lazy(() => import('@/pages/SignUp'));
 
@@ -21,8 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <FullPageLayout />,
-    children: [{ index: true, element: <Map /> }],
+    element: <MapPage />,
   },
   {
     path: '*',

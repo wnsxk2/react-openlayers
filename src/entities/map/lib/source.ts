@@ -1,8 +1,7 @@
-import type { MapType } from '@/features/map/legacy/model/types';
 import { OSM, XYZ } from 'ol/source';
 
 // 지도 타입별 베이스 레이어 소스 정의
-export const getBaseLayerSource = (mapType: MapType) => {
+export const getBaseLayerSource = (mapType: string) => {
   switch (mapType) {
     case 'normal':
       // 기본 OpenStreetMap
