@@ -1,5 +1,5 @@
 import { getBaseLayerSource, getDarkRasterSource } from '@/entities/map';
-import MapToggleMenu from '@/features/map/toggle-menu/ui';
+import { MapToggleMenu } from '@/features/map/toggle-menu';
 import { ZoomControl } from '@/features/map/zoom-control';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';

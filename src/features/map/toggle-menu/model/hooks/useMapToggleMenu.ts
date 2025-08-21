@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-const useMapToggleMenu = () => {
+export const useMapToggleMenu = () => {
   const navigate = useNavigate();
   // TODO: entities에 로직 구현
   //   const { user, login, logout } = useUser();
@@ -41,4 +41,3 @@ const useMapToggleMenu = () => {
   ];
   return { menuItems };
 };
-export default useMapToggleMenu;
