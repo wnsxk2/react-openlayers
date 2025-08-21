@@ -1,5 +1,6 @@
 import { getBaseLayerSource, getDarkRasterSource } from '@/entities/map';
 import MapToggleMenu from '@/features/map/toggle-menu/ui';
+import { ZoomControl } from '@/features/map/zoom-control';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import { Map, View } from 'ol';
@@ -8,15 +9,10 @@ import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 import { useEffect, useRef, useState } from 'react';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
-import { FiMinus, FiPlus } from 'react-icons/fi';
-import { IoMenuOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_ZOOM = 12;
-const labels = ['로그인', '라이트모드', '한국어'];
 
 export default function MapPage() {
-  const navigate = useNavigate();
   // sidebar
   const [isSiderbarOpen, setSidebarOpen] = useState(true);
 
@@ -35,7 +31,6 @@ export default function MapPage() {
   const [checkedOptionalLayer, setCheckedOptionalLayer] = useState<
     Record<string, boolean>
   >({});
-  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
 
   useEffect(() => {
     // div 연결 확인 & 이미 map이 초기화 되었다면 재실행 x
@@ -140,12 +135,6 @@ export default function MapPage() {
     optionalLayers[type].layer.setVisible(isChecked);
   };
 
-  const onChangeZoom = (value: number) => {
-    if (!mapInstance.current) return;
-    mapInstance.current.getView().setZoom(value);
-    setZoom(value);
-  };
-
   return (
     <div css={layoutStyles}>
       <aside css={[sidebarStyles, !isSiderbarOpen && hideSidebarStyles]}>
@@ -176,7 +165,7 @@ export default function MapPage() {
         </button>
       </aside>
       <main css={mainStyles({ isOpen: isSiderbarOpen })}>
-        <div css={mapContainerStyles} ref={mapRef}>
+        <section css={mapContainerStyles} ref={mapRef}>
           <div css={baseLayerSelector}>
             {Object.values(baseLayers)
               .sort((a, b) => a.order - b.order)
@@ -194,40 +183,15 @@ export default function MapPage() {
                 </button>
               ))}
           </div>
-          <div css={sliderContainer}>
-            <button css={zoomBtn} onClick={() => onChangeZoom(zoom - 1)}>
-              <FiMinus />
-            </button>
-            <div css={sliderTrackContainer}>
-              <input
-                type='range'
-                min='0'
-                max='28'
-                value={zoom}
-                onChange={(e) => onChangeZoom(Number(e.target.value))}
-                css={sliderInput}
-              />
-              <div css={sliderTrack}>
-                <div
-                  css={sliderFill}
-                  style={{ width: `${(zoom / 28) * 100}%` }}
-                />
-              </div>
-            </div>
-            <button css={zoomBtn} onClick={() => onChangeZoom(zoom + 1)}>
-              <FiPlus />
-            </button>
-          </div>
-        </div>
-
-        <section>
-          <MapToggleMenu
-            position={css`
-              top: 15px;
-              right: 15px;
-            `}
-          />
+          <ZoomControl mapInstance={mapInstance.current} />
         </section>
+
+        <MapToggleMenu
+          position={css`
+            top: 15px;
+            right: 15px;
+          `}
+        />
       </main>
     </div>
   );
@@ -378,97 +342,4 @@ const checkboxText = css`
   font-weight: 500;
   color: ${colors.textSecondary};
   user-select: none;
-`;
-
-const sliderContainer = css`
-  position: absolute;
-  box-sizing: content-box;
-  display: flex;
-  align-items: center;
-  bottom: 15px;
-  right: 15px;
-  width: 220px;
-  height: 40px;
-  background-color: ${colors.white};
-  border: 1px solid ${colors.borderLight};
-  border-radius: 8px;
-  box-shadow: 2px 0 8px ${colors.shadowLight};
-  z-index: 100;
-  transform: translate(90px, -90px) rotateZ(-90deg);
-`;
-
-const sliderTrackContainer = css`
-  position: relative;
-  height: 20px;
-  display: flex;
-  flex: 1;
-  align-items: center;
-  margin: auto 10px;
-`;
-
-const sliderInput = css`
-  width: 100%;
-  height: 4px;
-  background: transparent;
-  appearance: none;
-  position: absolute;
-  z-index: 2;
-  cursor: pointer;
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background-color: ${colors.buttonFocus};
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid ${colors.white};
-    box-shadow: 0 2px 4px ${colors.shadowLight};
-  }
-
-  &::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    background-color: ${colors.buttonFocus};
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid ${colors.white};
-    box-shadow: 0 2px 4px ${colors.shadowLight};
-  }
-`;
-
-const sliderTrack = css`
-  width: 100%;
-  height: 4px;
-  background-color: ${colors.gray200};
-  border-radius: 2px;
-  position: relative;
-  overflow: hidden;
-`;
-
-const sliderFill = css`
-  height: 100%;
-  background-color: ${colors.buttonFocus};
-  border-radius: 2px;
-`;
-
-const zoomBtn = css`
-  height: 100%;
-  aspect-ratio: 1/1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:first-of-type {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-right: 1px solid ${colors.gray300};
-  }
-  &:last-of-type {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-left: 1px solid ${colors.gray300};
-  }
-  &:hover {
-    background-color: ${colors.gray200};
-  }
 `;
