@@ -1,4 +1,5 @@
 import { getBaseLayerSource, getDarkRasterSource } from '@/entities/map';
+import MapToggleMenu from '@/features/map/toggle-menu/ui';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import { Map, View } from 'ol';
@@ -20,26 +21,6 @@ export default function MapPage() {
   const [isSiderbarOpen, setSidebarOpen] = useState(true);
 
   const onToggleSidebar = () => setSidebarOpen((prev) => !prev);
-
-  // menu button
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const clickOutside = (e: MouseEvent) => {
-      if (isMenuOpen && !menuRef.current?.contains(e.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', clickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', clickOutside);
-    };
-  }, [isMenuOpen]);
-
-  const onToggleMenu = () => setMenuOpen((prev) => !prev);
 
   // map
   const mapRef = useRef<HTMLDivElement>(null);
@@ -239,30 +220,14 @@ export default function MapPage() {
           </div>
         </div>
 
-        <div css={wrapper} ref={menuRef}>
-          <button
-            css={toggleButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleMenu();
-            }}
-          >
-            <IoMenuOutline />
-          </button>
-          <div css={[contentWrapper, !isMenuOpen && contentWrapperHidden]}>
-            {labels.map((label) => (
-              <button
-                key={label}
-                css={button}
-                onClick={() => {
-                  navigate('/login');
-                }}
-              >
-                <span>{label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <section>
+          <MapToggleMenu
+            position={css`
+              top: 15px;
+              right: 15px;
+            `}
+          />
+        </section>
       </main>
     </div>
   );
@@ -505,69 +470,5 @@ const zoomBtn = css`
   }
   &:hover {
     background-color: ${colors.gray200};
-  }
-`;
-
-// menu button
-const wrapper = css`
-  position: absolute;
-  z-index: 100;
-  top: 15px;
-  right: 15px;
-`;
-
-const toggleButton = css`
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.white};
-  border: 1px solid ${colors.borderLight};
-  border-radius: 50%;
-  box-shadow: 2px 0 8px ${colors.shadowLight};
-`;
-
-const contentWrapper = css`
-  position: absolute;
-  right: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  width: 160px;
-  margin-top: 6px;
-  background-color: ${colors.white};
-  border-radius: 8px;
-  border: 1px solid ${colors.borderLight};
-  box-shadow: 0 2px 8px ${colors.shadowLight};
-  overflow: hidden;
-  max-height: 1000px;
-  opacity: 1;
-  /* 위치를 이동 시켜 자연스럽게 애니메이션 처리 */
-  transform: translateY(0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-`;
-
-const contentWrapperHidden = css`
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-8px);
-  border-color: transparent;
-  box-shadow: none;
-`;
-
-const button = css`
-  width: 100%;
-  text-align: start;
-  padding-left: 8px;
-  border-bottom: 1px solid ${colors.borderLight};
-  &:last-child {
-    border-bottom: none;
-  }
-  &:hover {
-    background-color: ${colors.gray100};
-  }
-  span {
-    font-size: 14px;
   }
 `;
