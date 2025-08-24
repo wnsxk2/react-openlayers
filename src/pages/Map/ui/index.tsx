@@ -21,6 +21,7 @@ export default function MapPage() {
   // map
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<Map | null>(null);
+  const [isMapReady, setIsMapReady] = useState(false);
   const [baseLayers, setBaseLayers] = useState<
     Record<string, { order: number; label: string; type: string; layer: Layer }>
   >({});
@@ -100,10 +101,14 @@ export default function MapPage() {
       }),
     });
 
+    // map 인스턴스 할당 완료 플래그 설정
+    setIsMapReady(true);
+
     return () => {
       if (mapInstance.current) {
         mapInstance.current.setTarget(undefined);
         mapInstance.current = null;
+        setIsMapReady(false);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,7 +188,7 @@ export default function MapPage() {
                 </button>
               ))}
           </div>
-          <ZoomControl mapInstance={mapInstance.current} />
+          <ZoomControl mapInstance={mapInstance.current} isMapReady={isMapReady} />
         </section>
 
         <MapToggleMenu
