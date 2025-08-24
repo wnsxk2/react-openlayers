@@ -1,17 +1,18 @@
-import { loginApi } from '../api/loginApi';
 import { useState } from 'react';
-import { type LoginRequest } from '../types';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import type { LoginRequest, LoginErrorResponse } from '@/entities/login';
+import { loginApi } from '../api/loginApi';
 
 export function useLogin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null); // 에러메시지 저장
+  const [error, setError] = useState<string | null>(null);
 
   const login = async (credentials: LoginRequest) => {
     try {
       setLoading(true);
-      setError(null); // 이전 에러메세지 지우기
+      setError(null);
 
       const response = await loginApi.login(credentials);
 
@@ -21,9 +22,14 @@ export function useLogin() {
         navigate('/');
       }, 500);
     } catch (err) {
-      setError('로그인 중 오류가 발생했습니다.');
+      if (axios.isAxiosError(err) && err.response) {
+        const errorData = err.response.data as LoginErrorResponse;
+        setError(errorData.error.message);
+      } else {
+        setError('로그인 중 오류가 발생했습니다.');
+      }
     } finally {
-      //setLoading(false);
+      setLoading(false);
     }
   };
 

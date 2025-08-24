@@ -1,10 +1,12 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLogin } from '../model/hooks/useLogin.ts';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { LoginInput } from './LoginInput';
+import { LoginButton } from './LoginButton';
+import { LoginMessage } from './LoginMessage';
+import { useLogin } from '../model/hooks/useLogin';
 
-export default function LoginForm() {
+export function LoginForm() {
   const navigate = useNavigate();
   const { login, loading, error } = useLogin();
   const [id, setId] = useState('');
@@ -37,54 +39,59 @@ export default function LoginForm() {
   };
 
   return (
-    <>
+    <div css={loginContainer}>
       <form onSubmit={handleLoginSubmit} css={formContainer}>
         <p css={loginText}>로그인</p>
         <p css={loginSubText}>로그인하시고 나만의 즐겨찾기를 이용해보세요</p>
-        <input
+
+        <LoginInput
           type='text'
           value={id}
-          onChange={(e) => setId(e.target.value)}
-          css={[infoInputField, inputErrors.id && errorField]}
+          onChange={setId}
           placeholder='아이디를 입력하세요.'
-        ></input>
-        {inputErrors.id && <span css={errorMessage}>{inputErrors.id}</span>}
+          error={inputErrors.id}
+        />
 
-        <input
+        <LoginInput
           type='password'
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          css={[infoInputField, inputErrors.password && errorField]}
+          onChange={setPassword}
           placeholder='비밀번호를 입력하세요.'
-        ></input>
-        {inputErrors.password && (
-          <span css={errorMessage}>{inputErrors.password}</span>
-        )}
+          error={inputErrors.password}
+        />
 
         <div css={loginButtonContainer}>
-          <button type='submit' disabled={loading} css={loginButton}>
+          <LoginButton type='submit' variant='login' disabled={loading}>
             {loading ? '로그인 중...' : '로그인'}
-          </button>
-          <button
+          </LoginButton>
+          <LoginButton
             type='button'
-            onClick={handleSignUp}
+            variant='signup'
             disabled={loading}
-            css={signUpButton}
+            onClick={handleSignUp}
           >
             회원가입
-          </button>
+          </LoginButton>
         </div>
+
         <Link to='/' css={loginCancelText}>
           돌아가기
         </Link>
-        {error && <div css={serverErrorMessage}>{error}</div>}
+
+        {error && <LoginMessage message={error} />}
       </form>
-    </>
+    </div>
   );
 }
 
+const loginContainer = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
 const formContainer = css`
-  //   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,56 +115,11 @@ const loginSubText = css`
   margin-bottom: 30px;
 `;
 
-const infoInputField = css`
-  width: 80%;
-  padding: 10px 14px;
-  margin: 0 auto 12px auto;
-  border: 2px solid #e1e5e9;
-  border-radius: 12px;
-  font-size: 16px;
-  background-color: #f8f9fa;
-  transition: all 0.3s ease;
-
-  &::placeholder {
-    color: #666666;
-    opacity: 0.8;
-  }
-`;
-
-const errorField = css`
-  border-color: #dc3545 !important;
-  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
-`;
-
-const errorMessage = css`
-  color: #dc3545;
-  font-size: 12px;
-  margin: 0 auto 16px auto;
-  width: 80%;
-  text-align: left;
-  padding-left: 4px;
-`;
-
 const loginButtonContainer = css`
   margin-top: 30px;
   margin-bottom: 30px;
   display: flex;
   justify-content: center;
-`;
-
-const loginButton = css`
-  margin-right: 25px;
-  background-color: lightblue;
-  border: 7px solid lightblue;
-  width: 70px;
-  border-radius: 5px;
-`;
-
-const signUpButton = css`
-  background-color: lightpink;
-  border: 7px solid lightpink;
-  width: 70px;
-  border-radius: 5px;
 `;
 
 const loginCancelText = css`
@@ -167,13 +129,4 @@ const loginCancelText = css`
   margin-bottom: 20px;
   text-decoration: underline;
   cursor: pointer;
-`;
-
-const serverErrorMessage = css`
-  color: #721c24;
-  text-align: center;
-  font-size: 14px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 35px;
 `;
