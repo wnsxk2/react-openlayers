@@ -1,36 +1,36 @@
-export interface IdCheckRequest {
+export type IdCheckRequest = {
   id: string;
-}
+};
 
-export interface IdCheckResponse {
+export type IdCheckResponse = {
   success: true;
   data: {
     id: string;
     message: string;
     available: boolean;
   };
-}
+};
 
-export interface SignUpRequest {
+export type SignUpRequest = {
   id: string;
   password: string;
   email: string;
   username: string;
   tel: string;
-}
+};
 
-export interface SignUpSuccessResponse {
+export type SignUpSuccessResponse = {
   success: true;
   data: {
     id: string;
     username: string;
   };
-}
+};
 
-export interface ApiErrorResponse {
+export type ApiErrorResponse = {
   success: false;
   error: {
     code: string;
     message: string;
   };
-}
+};
