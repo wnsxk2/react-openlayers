@@ -8,6 +8,7 @@ import { ZoomSlider } from '@/features/map/zoom-control/ui/ZoomSlider';
 
 interface ZoomControlProps {
   mapInstance: Map | null;
+  isMapReady: boolean;
   initialZoom?: number;
   minZoom?: number;
   maxZoom?: number;
@@ -16,6 +17,7 @@ interface ZoomControlProps {
 
 export function ZoomControl({
   mapInstance,
+  isMapReady,
   initialZoom,
   minZoom,
   maxZoom,
@@ -30,6 +32,7 @@ export function ZoomControl({
     maxZoom: max,
   } = useZoomControl({
     mapInstance,
+    isMapReady,
     initialZoom,
     minZoom,
     maxZoom,
