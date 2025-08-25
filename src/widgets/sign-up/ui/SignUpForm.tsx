@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import { useIdCheck } from '../model/hooks/useIdCheck';
-import { usePasswordCheck } from '../model/hooks/usePasswordCheck';
-import { useEmailCheck } from '../model/hooks/useEmailCheck';
-import { useSignUpFormCheck } from '../model/hooks/useSignUpFormCheck';
-import { IdCheckInput } from './IdCheckInput';
-import { PasswordInput } from './PasswordInput';
-import { PasswordConfirmInput } from './PasswordConfirmInput';
-import { EmailInput } from './EmailInput';
-import { TextInput } from './TextInput';
-import { SignUpButton } from './SignUpButton';
-import { ErrorMessage } from './ErrorMessage';
+import { useIdCheck } from 'features/sign-up/model/hooks/useIdCheck';
+import { usePasswordCheck } from 'features/sign-up/model/hooks/usePasswordCheck';
+import { useEmailCheck } from 'features/sign-up/model/hooks/useEmailCheck';
+import { useSignUpFormCheck } from 'features/sign-up/model/hooks/useSignUpFormCheck';
+import { IdCheckInput } from 'features/sign-up/ui/IdCheckInput';
+import { PasswordInput } from 'features/sign-up/ui/PasswordInput';
+import { PasswordConfirmInput } from 'features/sign-up/ui/PasswordConfirmInput';
+import { EmailInput } from 'features/sign-up/ui/EmailInput';
+import { TextInput } from 'features/sign-up/ui/TextInput';
+import { SignUpButton } from 'features/sign-up/ui/SignUpButton';
+import { ErrorMessage } from 'features/sign-up/ui/ErrorMessage';
 
 export function SignUpForm() {
   const { idCheckResult, handleIdCheck } = useIdCheck();

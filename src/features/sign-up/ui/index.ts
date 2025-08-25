@@ -1,4 +1,3 @@
-export { SignUpForm } from './SignUpForm';
 export { IdCheckInput } from './IdCheckInput';
 export { PasswordInput } from './PasswordInput';
 export { PasswordConfirmInput } from './PasswordConfirmInput';

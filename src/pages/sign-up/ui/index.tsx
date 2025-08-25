@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { SignUpForm } from 'features/sign-up';
+import { SignUpForm } from 'widgets/sign-up';
 
 export default function SignUpPage() {
   return (

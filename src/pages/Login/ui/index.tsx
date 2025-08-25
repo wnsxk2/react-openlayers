@@ -1,4 +1,4 @@
-import { LoginForm } from 'features/login/index'
+import { LoginForm } from 'widgets/login'
 
 export default function LoginPage() {
   return (

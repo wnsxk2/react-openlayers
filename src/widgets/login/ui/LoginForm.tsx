@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LoginInput } from './LoginInput';
-import { LoginButton } from './LoginButton';
-import { LoginMessage } from './LoginMessage';
-import { useLogin } from '../model/hooks/useLogin';
+import { LoginInput } from 'features/login/ui/LoginInput';
+import { LoginButton } from 'features/login/ui/LoginButton';
+import { LoginMessage } from 'features/login/ui/LoginMessage';
+import { useLogin } from 'features/login/model/hooks/useLogin';
 
 export function LoginForm() {
   const navigate = useNavigate();
