@@ -19,7 +19,7 @@ export default function useBaseLayer({
 
   useEffect(() => {
     if (!mapInstance || !isMapReady) return;
-    initialLayers.map(({ id, layer }) => {
+    initialLayers.forEach(({ id, layer }) => {
       mapInstance.addLayer(layer(id === selectLayer));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,7 +31,7 @@ export default function useBaseLayer({
       .getLayers()
       .getArray()
       .filter((layer) => layer.get('type') === 'base')
-      .map((layer) =>
+      .forEach((layer) =>
         layer.get('id') === id
           ? layer.setVisible(true)
           : layer.setVisible(false)

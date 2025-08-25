@@ -15,6 +15,7 @@ const DEFAULT_LAYERS = [
       new TileLayer({
         source: getBaseLayerSource('normal'),
         visible,
+        zIndex: -100,
         properties: {
           type: 'base',
           id: 'normal',
@@ -28,6 +29,7 @@ const DEFAULT_LAYERS = [
       new TileLayer({
         source: getBaseLayerSource('satellite'),
         visible,
+        zIndex: -100,
         properties: {
           type: 'base',
           id: 'satellite',
@@ -41,6 +43,7 @@ const DEFAULT_LAYERS = [
       new TileLayer({
         source: getBaseLayerSource('terrain'),
         visible,
+        zIndex: -100,
         properties: {
           type: 'base',
           id: 'terrain',

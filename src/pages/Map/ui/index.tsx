@@ -1,12 +1,10 @@
-import { getDarkRasterSource } from '@/entities/map';
 import { BaseLayerSelector } from '@/features/map/base-layer-select';
+import { ToggleLayerPanel } from '@/features/map/toggle-layer';
 import { MapToggleMenu } from '@/features/map/toggle-menu';
 import { ZoomControl } from '@/features/map/zoom-control';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import { Map, View } from 'ol';
-import type Layer from 'ol/layer/Layer';
-import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 import { useEffect, useRef, useState } from 'react';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
@@ -23,38 +21,17 @@ export default function MapPage() {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<Map | null>(null);
   const [isMapReady, setIsMapReady] = useState(false);
-  const [optionalLayers, setOptionalLayers] = useState<
-    Record<string, { order: number; label: string; type: string; layer: Layer }>
-  >({});
-  const [checkedOptionalLayer, setCheckedOptionalLayer] = useState<
-    Record<string, boolean>
-  >({});
 
   useEffect(() => {
     // div 연결 확인 & 이미 map이 초기화 되었다면 재실행 x
     if (!mapRef.current || mapInstance.current) return;
-
-    const darkLayer = new TileLayer({
-      source: getDarkRasterSource(),
-      visible: false,
-      opacity: 0.7,
-    });
-
-    setOptionalLayers({
-      dark: {
-        order: 1,
-        label: '다크 레이어',
-        type: 'dark',
-        layer: darkLayer,
-      },
-    });
 
     // map 초기화
     mapInstance.current = new Map({
       // map을 표출할 element
       target: mapRef.current,
       controls: [],
-      // layers: [normalLayer, satelliteLayer, terrainLayer, darkLayer],
+      layers: [],
       view: new View({
         center: fromLonLat([126.9779, 37.5663]),
         zoom: DEFAULT_ZOOM,
@@ -73,44 +50,13 @@ export default function MapPage() {
     };
   }, []);
 
-  const onCheckedOptionalLayer = (type: string, isChecked: boolean) => {
-    if (!mapInstance.current) return;
-    setCheckedOptionalLayer((prev) => {
-      return {
-        ...prev,
-        [type]: isChecked,
-      };
-    });
-
-    // 선택된 레이어 업데이트
-    optionalLayers[type].layer.setVisible(isChecked);
-  };
-
   return (
     <div css={layoutStyles}>
       <aside css={[sidebarStyles, !isSiderbarOpen && hideSidebarStyles]}>
-        <div css={menuContentStyles}>
-          <h3 css={slideMenuTitle}>레이어 설정</h3>
-          {Object.values(optionalLayers)
-            .sort((a, b) => a.order - b.order)
-            .map(({ label, type }) => {
-              return (
-                <div key={type} css={layerCheckSection}>
-                  <label css={checkboxLabel}>
-                    <input
-                      type='checkbox'
-                      checked={checkedOptionalLayer[type] || false}
-                      onChange={(e) => {
-                        onCheckedOptionalLayer(type, e.target.checked);
-                      }}
-                      css={layersCheckbox}
-                    />
-                    <span css={checkboxText}>{label}</span>
-                  </label>
-                </div>
-              );
-            })}
-        </div>
+        <ToggleLayerPanel
+          mapInstance={mapInstance.current}
+          isMapReady={isMapReady}
+        />
         <button css={toggleButtonStyles} onClick={onToggleSidebar}>
           {isSiderbarOpen ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
         </button>
@@ -200,51 +146,4 @@ const toggleButtonStyles = css`
 const mapContainerStyles = css`
   width: 100%;
   height: 100%;
-`;
-
-const menuContentStyles = css`
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-`;
-
-const slideMenuTitle = css`
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: ${colors.textPrimary};
-  border-bottom: 1px solid ${colors.borderLight};
-  padding-bottom: 12px;
-`;
-
-const layerCheckSection = css`
-  margin-bottom: 24px;
-`;
-
-const checkboxLabel = css`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  padding: 8px 0;
-
-  &:hover {
-    background-color: ${colors.gray50};
-    border-radius: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-`;
-
-const layersCheckbox = css`
-  margin-right: 12px;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-`;
-
-const checkboxText = css`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${colors.textSecondary};
-  user-select: none;
 `;
