@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { signUpApi } from '../api/signUpApi';
@@ -13,6 +13,9 @@ export function useSignUpFormCheck() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [tel, setTel] = useState('');
+  const idRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const [inputErrors, setInputErrors] = useState<{
     id?: string;
@@ -32,6 +35,7 @@ export function useSignUpFormCheck() {
   const handleSignUp = async (idCheckResult: { available: boolean } | null) => {
     setServerError('');
     setInputErrors({});
+
 
     const requiredFields = [
       { value: id.trim(), name: '아이디', field: 'id' },
@@ -65,7 +69,7 @@ export function useSignUpFormCheck() {
         message: '비밀번호가 일치하지 않습니다.',
       },
       {
-        condition: !validateEmail(email.trim()),
+        condition: !validateEmail(email),
         field: 'email',
         message: '올바른 이메일 양식으로 작성해주세요.',
       },
@@ -95,9 +99,9 @@ export function useSignUpFormCheck() {
       setLoading(true);
 
       const signUpRequest: SignUpRequest = {
-        id: id.trim(),
+        id: id,
         password: password,
-        email: email.trim(),
+        email: email,
         username: username.trim(),
         tel: tel.trim(),
       };
@@ -127,6 +131,9 @@ export function useSignUpFormCheck() {
     setPasswordCheck,
     email,
     setEmail,
+    idRef,
+    passwordRef,
+    emailRef,
     username,
     setUsername,
     tel,

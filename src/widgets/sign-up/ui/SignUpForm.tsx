@@ -47,9 +47,7 @@ export function SignUpForm() {
   return (
     <form css={formContainer}>
       <p css={signUpText}>회원가입</p>
-      <p css={signUpSubText}>
-        즐겨찾기를 통해 여러분만의 지도를 만들어보세요
-      </p>
+      <p css={signUpSubText}>즐겨찾기를 통해 여러분만의 지도를 만들어보세요</p>
 
       <IdCheckInput
         id={id}
@@ -71,7 +69,9 @@ export function SignUpForm() {
         passwordCheck={passwordCheck}
         setPasswordCheck={setPasswordCheck}
         showPasswordCheck={showPasswordCheck}
-        onPasswordConfirmToggle={() => handlePasswordConfirmToggle(passwordCheck)}
+        onPasswordConfirmToggle={() =>
+          handlePasswordConfirmToggle(passwordCheck)
+        }
         passwordCheckConfirm={passwordCheckConfirm}
         setPasswordCheckConfirm={setPasswordCheckConfirm}
       />
@@ -104,10 +104,7 @@ export function SignUpForm() {
         돌아가기
       </Link>
 
-      <ErrorMessage
-        serverError={serverError}
-        inputErrors={inputErrors}
-      />
+      <ErrorMessage serverError={serverError} inputErrors={inputErrors} />
     </form>
   );
 }
