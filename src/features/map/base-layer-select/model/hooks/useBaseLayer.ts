@@ -1,16 +1,12 @@
+import type { LayerInfo } from '@/entities/map/model/types';
 import type { Map } from 'ol';
-import type Layer from 'ol/layer/Layer';
 import { useEffect, useState } from 'react';
 
 interface UseBaseLayerProps {
   mapInstance: Map | null;
   isMapReady: boolean;
   initialLayer: string;
-  initialLayers: {
-    id: string;
-    label: string;
-    layer: (select: string) => Layer;
-  }[];
+  initialLayers: LayerInfo[];
 }
 
 export default function useBaseLayer({
@@ -23,8 +19,8 @@ export default function useBaseLayer({
 
   useEffect(() => {
     if (!mapInstance || !isMapReady) return;
-    initialLayers.map(({ layer }) => {
-      mapInstance.addLayer(layer(selectLayer));
+    initialLayers.map(({ id, layer }) => {
+      mapInstance.addLayer(layer(id === selectLayer));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialLayers, isMapReady]);

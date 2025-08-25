@@ -1,20 +1,20 @@
 import { getBaseLayerSource } from '@/entities/map';
+import type { LayerInfo } from '@/entities/map/model/types';
 import useBaseLayer from '@/features/map/base-layer-select/model/hooks/useBaseLayer';
 import { BaseLayerItem } from '@/features/map/base-layer-select/ui/BaseLayerItem';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import type { Map } from 'ol';
-import type Layer from 'ol/layer/Layer';
 import TileLayer from 'ol/layer/Tile';
 
 const DEFAULT_LAYERS = [
   {
     id: 'normal',
     label: '일반',
-    layer: (select: string) =>
+    layer: (visible: boolean) =>
       new TileLayer({
         source: getBaseLayerSource('normal'),
-        visible: select === 'normal',
+        visible,
         properties: {
           type: 'base',
           id: 'normal',
@@ -24,10 +24,10 @@ const DEFAULT_LAYERS = [
   {
     id: 'satellite',
     label: '위성',
-    layer: (select: string) =>
+    layer: (visible: boolean) =>
       new TileLayer({
         source: getBaseLayerSource('satellite'),
-        visible: select === 'satellite',
+        visible,
         properties: {
           type: 'base',
           id: 'satellite',
@@ -37,10 +37,10 @@ const DEFAULT_LAYERS = [
   {
     id: 'terrain',
     label: '지형',
-    layer: (select: string) =>
+    layer: (visible: boolean) =>
       new TileLayer({
         source: getBaseLayerSource('terrain'),
-        visible: select === 'terrain',
+        visible,
         properties: {
           type: 'base',
           id: 'terrain',
@@ -53,11 +53,7 @@ interface BaseLayerSelectorProps {
   mapInstance: Map | null;
   isMapReady: boolean;
   initialLayer: string;
-  initialLayers?: {
-    id: string;
-    label: string;
-    layer: (select: string) => Layer;
-  }[];
+  initialLayers?: LayerInfo[];
 }
 
 export const BaseLayerSelector = ({
