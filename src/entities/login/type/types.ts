@@ -1,11 +1,9 @@
-// 요청 타입
-export interface LoginRequest {
+export type LoginRequest = {
   id: string;
   password: string;
-}
+};
 
-// 응답 타입
-export interface LoginSuccessResponse {
+export type LoginSuccessResponse = {
   success: true;
   data: {
     id: string;
@@ -14,12 +12,12 @@ export interface LoginSuccessResponse {
       refreshToken: string;
     };
   };
-}
+};
 
-export interface LoginErrorResponse {
+export type LoginErrorResponse = {
   success: false;
   error: {
     code: string;
     message: string;
   };
-}
+};

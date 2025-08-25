@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const usePasswordCheck = () => {
+export function usePasswordCheck() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
 
@@ -35,7 +35,6 @@ export const usePasswordCheck = () => {
   };
 
   return {
-    // state
     showPassword,
     setShowPassword,
     showPasswordCheck,
@@ -44,9 +43,7 @@ export const usePasswordCheck = () => {
     setPasswordConfirm,
     passwordCheckConfirm,
     setPasswordCheckConfirm,
-
-    // handler
     handlePasswordToggle,
     handlePasswordConfirmToggle,
   };
-};
+}

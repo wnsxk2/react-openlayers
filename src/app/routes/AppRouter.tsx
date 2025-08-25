@@ -1,7 +1,5 @@
 // src/routes/AppRouter.tsx
 import MainLayout from '@/shared/ui/layouts/MainLayout';
-import LoginLayout from '@/shared/ui/layouts/LoginLayout';
-import SignUpLayout from '@/shared/ui/layouts/SignUpLayout';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -9,8 +7,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const Home = lazy(() => import('@/pages/Home'));
 const MapPage = lazy(() => import('@/pages/map'));
 const NotFound = lazy(() => import('@/pages/not-found'));
-const Login = lazy(() => import('@/pages/Login'));
-const SignUp = lazy(() => import('@/pages/SignUp'));
+const LoginPage = lazy(() => import('@/pages/login'));
+const SignUpPage = lazy(() => import('@/pages/sign-up'));
 
 const router = createBrowserRouter([
   {
@@ -28,13 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginLayout />,
-    children: [{ index: true, element: <Login /> }],
+    element: <LoginPage />,
   },
   {
     path: '/signup',
-    element: <SignUpLayout />,
-    children: [{ index: true, element: <SignUp /> }],
+    element: <SignUpPage />,
   },
 ]);
 

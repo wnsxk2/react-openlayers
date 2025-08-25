@@ -1,13 +1,11 @@
-import { Outlet } from 'react-router-dom';
 import { css } from '@emotion/react';
+import { SignUpForm } from 'widgets/sign-up';
 
-export default function SignUpLayout() {
+export default function SignUpPage() {
   return (
-    <>
-      <div css={SignUpContainer}>
-        <Outlet />
-      </div>
-    </>
+    <div css={SignUpContainer}>
+      <SignUpForm />
+    </div>
   );
 }
 

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { signUpApi } from '../api/signUpApi';
-import type { SignUpRequest } from '../types';
+import type { SignUpRequest, ApiErrorResponse } from 'entities/sign-up';
 
-export const useSignUpFormCheck = () => {
+export function useSignUpFormCheck() {
   const navigate = useNavigate();
 
-  // Form states
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -14,7 +14,6 @@ export const useSignUpFormCheck = () => {
   const [username, setUsername] = useState('');
   const [tel, setTel] = useState('');
 
-  // Error and loading states
   const [inputErrors, setInputErrors] = useState<{
     id?: string;
     password?: string;
@@ -25,7 +24,6 @@ export const useSignUpFormCheck = () => {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string>('');
 
-  // 이메일 유효성 검사 (재사용을 위해 여기에 포함)
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -43,7 +41,6 @@ export const useSignUpFormCheck = () => {
       { value: tel.trim(), name: '전화번호', field: 'tel' },
     ];
 
-    // 첫 번째 빈 필드 찾기
     for (const field of requiredFields) {
       if (!field.value) {
         setInputErrors({ [field.field]: `${field.name}을(를) 입력해주세요.` });
@@ -81,7 +78,7 @@ export const useSignUpFormCheck = () => {
         condition:
           !/^0(1[0-9]|2|3[1-3]|4[1-4]|5[1-5]|6[1-4])-?\d{3,4}-?\d{4}$/.test(
             tel.trim()
-          ), // 서버측 에러처리와 다름 <- 목 api 에서 오류 발생?
+          ),
         field: 'tel',
         message: '올바른 전화번호 형식이 아닙니다.',
       },
@@ -94,7 +91,6 @@ export const useSignUpFormCheck = () => {
       }
     }
 
-    // 모든 검증 통과 시 API 호출
     try {
       setLoading(true);
 
@@ -110,15 +106,19 @@ export const useSignUpFormCheck = () => {
 
       alert(`${response.data.username}님, 회원가입이 완료되었습니다!`);
       navigate('/login');
-    } catch (error) {
-      setServerError('회원가입 중 오류가 발생했습니다.');
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const errorData = err.response.data as ApiErrorResponse;
+        setServerError(errorData.error.message);
+      } else {
+        setServerError('회원가입 중 오류가 발생했습니다.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return {
-    // formdata
     id,
     setId,
     password,
@@ -131,13 +131,9 @@ export const useSignUpFormCheck = () => {
     setUsername,
     tel,
     setTel,
-
-    // state
     inputErrors,
     loading,
     serverError,
-
-    // handler
     handleSignUp,
   };
-};
+}

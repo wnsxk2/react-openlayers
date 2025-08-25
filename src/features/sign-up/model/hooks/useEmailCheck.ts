@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useEmailCheck = () => {
+export function useEmailCheck() {
   const [emailCheckResult, setEmailCheckResult] = useState<{
     message: string;
   } | null>(null);
@@ -31,4 +31,4 @@ export const useEmailCheck = () => {
     validateEmail,
     handleEmailValidation,
   };
-};
+}

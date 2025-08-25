@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import axios from 'axios';
 import { signUpApi } from '../api/signUpApi';
+import type { ApiErrorResponse } from 'entities/sign-up';
 
-export const useIdCheck = () => {
+export function useIdCheck() {
   const [idCheckResult, setIdCheckResult] = useState<{
     available: boolean;
     message: string;
@@ -32,10 +34,18 @@ export const useIdCheck = () => {
         message: response.data.message,
       });
     } catch (error) {
-      setIdCheckResult({
-        available: false,
-        message: '서버 내부 오류가 발생했습니다.',
-      });
+      if (axios.isAxiosError(error) && error.response) {
+        const errorData = error.response.data as ApiErrorResponse;
+        setIdCheckResult({
+          available: false,
+          message: errorData.error.message,
+        });
+      } else {
+        setIdCheckResult({
+          available: false,
+          message: '네트워크 오류가 발생했습니다.',
+        });
+      }
     }
   };
 
@@ -44,4 +54,4 @@ export const useIdCheck = () => {
     setIdCheckResult,
     handleIdCheck,
   };
-};
+}
