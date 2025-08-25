@@ -1,4 +1,5 @@
-import { getBaseLayerSource, getDarkRasterSource } from '@/entities/map';
+import { getDarkRasterSource } from '@/entities/map';
+import { BaseLayerSelector } from '@/features/map/base-layer-select';
 import { MapToggleMenu } from '@/features/map/toggle-menu';
 import { ZoomControl } from '@/features/map/zoom-control';
 import { colors } from '@/shared/styles';
@@ -22,13 +23,9 @@ export default function MapPage() {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<Map | null>(null);
   const [isMapReady, setIsMapReady] = useState(false);
-  const [baseLayers, setBaseLayers] = useState<
-    Record<string, { order: number; label: string; type: string; layer: Layer }>
-  >({});
   const [optionalLayers, setOptionalLayers] = useState<
     Record<string, { order: number; label: string; type: string; layer: Layer }>
   >({});
-  const [selectedBaseLayer, setSelectedBaseLayer] = useState<string>('normal');
   const [checkedOptionalLayer, setCheckedOptionalLayer] = useState<
     Record<string, boolean>
   >({});
@@ -37,47 +34,10 @@ export default function MapPage() {
     // div 연결 확인 & 이미 map이 초기화 되었다면 재실행 x
     if (!mapRef.current || mapInstance.current) return;
 
-    const normalLayer = new TileLayer({
-      source: getBaseLayerSource('normal'),
-      visible: selectedBaseLayer === 'normal',
-    });
-
-    const satelliteLayer = new TileLayer({
-      source: getBaseLayerSource('satellite'),
-      visible: selectedBaseLayer === 'satellite',
-    });
-
-    const terrainLayer = new TileLayer({
-      source: getBaseLayerSource('terrain'),
-      visible: selectedBaseLayer === 'terrain',
-    });
-
     const darkLayer = new TileLayer({
       source: getDarkRasterSource(),
       visible: false,
       opacity: 0.7,
-    });
-
-    // layer 초기화
-    setBaseLayers({
-      normal: {
-        order: 1,
-        label: '일반',
-        type: 'normal',
-        layer: normalLayer,
-      },
-      satellite: {
-        order: 3,
-        label: '위성',
-        type: 'satellite',
-        layer: satelliteLayer,
-      },
-      terrain: {
-        order: 2,
-        label: '지형',
-        type: 'terrain',
-        layer: terrainLayer,
-      },
     });
 
     setOptionalLayers({
@@ -94,7 +54,7 @@ export default function MapPage() {
       // map을 표출할 element
       target: mapRef.current,
       controls: [],
-      layers: [normalLayer, satelliteLayer, terrainLayer, darkLayer],
+      // layers: [normalLayer, satelliteLayer, terrainLayer, darkLayer],
       view: new View({
         center: fromLonLat([126.9779, 37.5663]),
         zoom: DEFAULT_ZOOM,
@@ -111,21 +71,7 @@ export default function MapPage() {
         setIsMapReady(false);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onSelectBaseLayer = (type: string) => {
-    if (!mapInstance.current) return;
-    setSelectedBaseLayer(type);
-
-    // 모든 레이어를 숨김
-    Object.values(baseLayers).forEach(({ layer }) => {
-      layer.setVisible(false);
-    });
-
-    // 선택된 레이어만 표시
-    baseLayers[type].layer.setVisible(true);
-  };
 
   const onCheckedOptionalLayer = (type: string, isChecked: boolean) => {
     if (!mapInstance.current) return;
@@ -171,24 +117,15 @@ export default function MapPage() {
       </aside>
       <main css={mainStyles({ isOpen: isSiderbarOpen })}>
         <section css={mapContainerStyles} ref={mapRef}>
-          <div css={baseLayerSelector}>
-            {Object.values(baseLayers)
-              .sort((a, b) => a.order - b.order)
-              .map(({ label, type }) => (
-                <button
-                  key={type}
-                  css={baseLayerSelectBtn({
-                    isActive: type === selectedBaseLayer,
-                  })}
-                  onClick={() => {
-                    onSelectBaseLayer(type);
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-          </div>
-          <ZoomControl mapInstance={mapInstance.current} isMapReady={isMapReady} />
+          <BaseLayerSelector
+            mapInstance={mapInstance.current}
+            isMapReady={isMapReady}
+            initialLayer={'normal'}
+          />
+          <ZoomControl
+            mapInstance={mapInstance.current}
+            isMapReady={isMapReady}
+          />
         </section>
 
         <MapToggleMenu
@@ -263,43 +200,6 @@ const toggleButtonStyles = css`
 const mapContainerStyles = css`
   width: 100%;
   height: 100%;
-`;
-
-const baseLayerSelector = css`
-  top: 15px;
-  left: 15px;
-
-  display: flex;
-  flex-direction: row;
-  z-index: 100;
-  padding: 5px;
-  gap: 5px;
-  position: absolute;
-  background-color: ${colors.white};
-  border: 1px solid ${colors.borderLight};
-  border-radius: 8px;
-  box-shadow: 2px 0 8px ${colors.shadowLight};
-`;
-
-const baseLayerSelectBtn = ({ isActive }: { isActive: boolean }) => css`
-  font-size: 14px;
-  border-radius: 4px;
-  padding: 8px 16px;
-  transition: background-color 0.2s ease-in;
-
-  ${!isActive &&
-  css`
-    &:hover {
-      background-color: ${colors.buttonHover};
-    }
-  `}
-
-  ${isActive &&
-  css`
-    font-weight: 500;
-    color: ${colors.white};
-    background-color: ${colors.buttonFocus};
-  `}
 `;
 
 const menuContentStyles = css`
