@@ -1,9 +1,5 @@
 import axios from 'axios';
-import type {
-  LoginRequest,
-  LoginSuccessResponse,
-  LoginErrorResponse,
-} from 'entities/login/index';
+import type { LoginRequest, LoginSuccessResponse, LoginErrorResponse } from '../../types/types';
 
 export const loginApi = {
   login: async (credentials: LoginRequest): Promise<LoginSuccessResponse> => {

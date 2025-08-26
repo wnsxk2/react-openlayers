@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import { useIdCheck } from 'features/sign-up/model/hooks/useIdCheck';
-import { usePasswordCheck } from 'features/sign-up/model/hooks/usePasswordCheck';
-import { useEmailCheck } from 'features/sign-up/model/hooks/useEmailCheck';
-import { useSignUpFormCheck } from 'features/sign-up/model/hooks/useSignUpFormCheck';
-import { IdCheckInput } from 'features/sign-up/ui/IdCheckInput';
-import { PasswordInput } from 'features/sign-up/ui/PasswordInput';
-import { PasswordConfirmInput } from 'features/sign-up/ui/PasswordConfirmInput';
-import { EmailInput } from 'features/sign-up/ui/EmailInput';
-import { TextInput } from 'features/sign-up/ui/TextInput';
-import { SignUpButton } from 'features/sign-up/ui/SignUpButton';
-import { ErrorMessage } from 'features/sign-up/ui/ErrorMessage';
+import { useIdCheck } from '@/features/auth/sign-up/model/hooks/useIdCheck';
+import { usePasswordCheck } from '@/features/auth/sign-up/model/hooks/usePasswordCheck';
+import { useEmailCheck } from '@/features/auth/sign-up/model/hooks/useEmailCheck';
+import { useSignUpFormCheck } from '@/features/auth/sign-up/model/hooks/useSignUpFormCheck';
+import { IdCheckInput } from '@/features/auth/sign-up/ui/IdCheckInput';
+import { PasswordInput } from '@/features/auth/sign-up/ui/PasswordInput';
+import { PasswordConfirmInput } from '@/features/auth/sign-up/ui/PasswordConfirmInput';
+import { EmailInput } from '@/features/auth/sign-up/ui/EmailInput';
+import { TextInput } from '@/features/auth/sign-up/ui/TextInput';
+import { SignUpButton } from '@/features/auth/sign-up/ui/SignUpButton';
+import { ErrorMessage } from '@/features/auth/sign-up/ui/ErrorMessage';
 
 export function SignUpForm() {
   const { idCheckResult, handleIdCheck } = useIdCheck();
