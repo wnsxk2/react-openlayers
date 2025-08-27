@@ -1,94 +1,36 @@
-import { getDarkRasterSource, type LayerInfo } from '@/entities/map';
-import {
-  useToggleLayer,
-  useGetPolygon,
-  LayerToggleButton,
-} from '@/features/map/toggle-layer';
+import type { LayerInfo } from '@/entities/map';
+import { LayerToggleButton } from '@/features/map/toggle-layer/ui/LayerToggleButton';
+import { useLayerManager } from '@/features/map/toggle-layer/model/hooks/useLayerManager';
+import { useMapClickHandler } from '@/features/map/toggle-layer/model/hooks/useMapClickHandler';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import type { Map } from 'ol';
-import TileLayer from 'ol/layer/Tile';
-import VectorSource from 'ol/source/Vector';
-import GeoJSON from 'ol/format/GeoJSON';
-import VectorLayer from 'ol/layer/Vector';
-import { useEffect, useState } from 'react';
-import Style from 'ol/style/Style';
-import Fill from 'ol/style/Fill';
-import Stroke from 'ol/style/Stroke';
-
-const DEFAULT_LAYERS: LayerInfo[] = [
-  {
-    id: 'dark',
-    label: '다크 레이어',
-    layer: (visible: boolean) =>
-      new TileLayer({
-        source: getDarkRasterSource(),
-        visible,
-        opacity: 0.7,
-        properties: {
-          id: 'dark',
-          type: 'toggle',
-        },
-      }),
-  },
-];
 
 interface ToggleLayerPanelProps {
   mapInstance: Map | null;
   isMapReady: boolean;
-  initialLayers?: LayerInfo[];
+  defaultLayers?: LayerInfo[];
 }
 
 export const ToggleLayerPanel = ({
   mapInstance,
   isMapReady,
-  initialLayers = DEFAULT_LAYERS,
+  defaultLayers,
 }: ToggleLayerPanelProps) => {
-  const { data: polygon } = useGetPolygon();
-  const [currentLayers, setCurrentLayers] =
-    useState<LayerInfo[]>(initialLayers);
-
-  useEffect(() => {
-    if (polygon) {
-      setCurrentLayers([
-        {
-          id: 'polygon',
-          label: '폴리곤 레이어',
-          layer: (visible: boolean) =>
-            new VectorLayer({
-              source: new VectorSource({
-                features: new GeoJSON().readFeatures(polygon, {
-                  dataProjection: 'EPSG:4326',
-                  featureProjection: 'EPSG:3857',
-                }),
-              }),
-              style: new Style({
-                fill: new Fill({
-                  color: 'rgba(255, 0, 0, 0.2)', // 반투명 빨강
-                }),
-                stroke: new Stroke({
-                  color: '#ff0000', // 빨강
-                  width: 2,
-                }),
-              }),
-              visible,
-              opacity: 0.7,
-              zIndex: 1,
-              properties: {
-                id: 'polygon',
-                type: 'toggle',
-              },
-            }),
-        },
-        ...currentLayers,
-      ]);
-    }
-  }, [polygon]);
-  const { layers, toggleLayer, handleToggleLayer } = useToggleLayer({
+  // 레이어 관리 (polygon 데이터 조회 포함)
+  const { layers, toggleState, toggleLayer } = useLayerManager({
     mapInstance,
     isMapReady,
-    initialLayers: currentLayers,
+    defaultLayers,
   });
+
+  // 맵 클릭 이벤트 처리
+  useMapClickHandler({
+    mapInstance,
+    isMapReady,
+    enabled: true,
+  });
+
   return (
     <div css={contentStyles}>
       <h3 css={titleStyles}>레이어 설정</h3>
@@ -97,8 +39,8 @@ export const ToggleLayerPanel = ({
           key={id}
           name={id}
           label={label}
-          value={toggleLayer[id] || false}
-          onChange={handleToggleLayer}
+          value={toggleState[id] || false}
+          onChange={toggleLayer}
         />
       ))}
     </div>
