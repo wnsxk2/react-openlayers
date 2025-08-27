@@ -1,4 +1,5 @@
-import { useMap } from '@/entities/map/model/hooks/useMap';
+import { OverlayProvider, useMap, useTooltipOverlay } from '@/entities/map';
+import { PolygonTooltip } from '@/features/map/polygon-tooltip';
 import { MapToggleMenu } from '@/features/map/toggle-menu';
 import { colors } from '@/shared/styles';
 import { MapControls } from '@/widgets/map/map-controls';
@@ -20,28 +21,35 @@ export default function MapPage() {
     zoom: DEFAULT_ZOOM,
     center: DEFAULT_CENTER,
   });
+  const { tooltipRef } = useTooltipOverlay({
+    id: 'polygon',
+    mapInstance,
+  });
 
   return (
-    <div css={layoutStyles}>
-      <MapSideBar
-        mapInstance={mapInstance}
-        isMapReady={isMapReady}
-        isOpen={isSiderBarOpen}
-        onToggle={handleToggleSideBar}
-      />
-      <main css={mainStyles({ isOpen: isSiderBarOpen })}>
-        <section css={mapContainerStyles} ref={mapRef}>
-          <MapControls mapInstance={mapInstance} isMapReady={isMapReady} />
-        </section>
-
-        <MapToggleMenu
-          position={css`
-            top: 15px;
-            right: 15px;
-          `}
+    <OverlayProvider>
+      <div css={layoutStyles}>
+        <MapSideBar
+          mapInstance={mapInstance}
+          isMapReady={isMapReady}
+          isOpen={isSiderBarOpen}
+          onToggle={handleToggleSideBar}
         />
-      </main>
-    </div>
+        <main css={mainStyles({ isOpen: isSiderBarOpen })}>
+          <section css={mapContainerStyles} ref={mapRef}>
+            <MapControls mapInstance={mapInstance} isMapReady={isMapReady} />
+            <PolygonTooltip ref={tooltipRef} />
+          </section>
+
+          <MapToggleMenu
+            position={css`
+              top: 15px;
+              right: 15px;
+            `}
+          />
+        </main>
+      </div>
+    </OverlayProvider>
   );
 }
 
