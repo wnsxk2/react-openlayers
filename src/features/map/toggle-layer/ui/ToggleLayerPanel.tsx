@@ -1,45 +1,36 @@
-import { getDarkRasterSource } from '@/entities/map';
-import type { LayerInfo } from '@/entities/map/model/types';
-import { useToggleLayer } from '@/features/map/toggle-layer/model/hooks/useToggleLayer';
+import type { LayerInfo } from '@/entities/map';
 import { LayerToggleButton } from '@/features/map/toggle-layer/ui/LayerToggleButton';
+import { useLayerManager } from '@/features/map/toggle-layer/model/hooks/useLayerManager';
+import { useMapClickHandler } from '@/features/map/toggle-layer/model/hooks/useMapClickHandler';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import type { Map } from 'ol';
-import TileLayer from 'ol/layer/Tile';
-
-const DEFAULT_LAYERS: LayerInfo[] = [
-  {
-    id: 'dark',
-    label: '다크 레이어',
-    layer: (visible: boolean) =>
-      new TileLayer({
-        source: getDarkRasterSource(),
-        visible,
-        opacity: 0.7,
-        properties: {
-          id: 'dark',
-          type: 'toggle',
-        },
-      }),
-  },
-];
 
 interface ToggleLayerPanelProps {
   mapInstance: Map | null;
   isMapReady: boolean;
-  initialLayers?: LayerInfo[];
+  defaultLayers?: LayerInfo[];
 }
 
 export const ToggleLayerPanel = ({
   mapInstance,
   isMapReady,
-  initialLayers = DEFAULT_LAYERS,
+  defaultLayers,
 }: ToggleLayerPanelProps) => {
-  const { layers, toggleLayer, handleToggleLayer } = useToggleLayer({
+  // 레이어 관리 (polygon 데이터 조회 포함)
+  const { layers, toggleState, toggleLayer } = useLayerManager({
     mapInstance,
     isMapReady,
-    initialLayers,
+    defaultLayers,
   });
+
+  // 맵 클릭 이벤트 처리
+  useMapClickHandler({
+    mapInstance,
+    isMapReady,
+    enabled: true,
+  });
+
   return (
     <div css={contentStyles}>
       <h3 css={titleStyles}>레이어 설정</h3>
@@ -48,8 +39,8 @@ export const ToggleLayerPanel = ({
           key={id}
           name={id}
           label={label}
-          value={toggleLayer[id] || false}
-          onChange={handleToggleLayer}
+          value={toggleState[id] || false}
+          onChange={toggleLayer}
         />
       ))}
     </div>

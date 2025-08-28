@@ -1,5 +1,6 @@
-import type { LayerInfo } from '@/entities/map/model/types';
-import type { Map } from 'ol';
+import type { LayerInfo, PolygonInfo } from '@/entities/map';
+import { useOverlay } from '@/entities/map/ui/OverlayProvider';
+import type { Map, MapBrowserEvent } from 'ol';
 import { useEffect, useMemo, useState } from 'react';
 
 interface UseToggleLayerProps {
@@ -13,6 +14,7 @@ export function useToggleLayer({
   isMapReady,
   initialLayers,
 }: UseToggleLayerProps) {
+  const { handleProperties } = useOverlay();
   const { initialToggle } = useMemo(() => {
     const initialToggle = initialLayers.reduce(
       (acc, { id }) => ({ ...acc, [id]: false }),
@@ -32,6 +34,33 @@ export function useToggleLayer({
     initialLayers.forEach(({ id, layer }) => {
       mapInstance.addLayer(layer(toggleLayer[id] || false));
     });
+
+    const clickEvent = (e: MapBrowserEvent) => {
+      mapInstance.forEachFeatureAtPixel(
+        e.pixel,
+        function (feature) {
+          handleProperties(feature.getProperties() as PolygonInfo);
+
+          const overlay = mapInstance.getOverlayById('polygon');
+          if (!overlay) return;
+          overlay.setPosition(e.coordinate);
+        },
+        {
+          layerFilter: (layer) => {
+            return layer.getVisible();
+          },
+        }
+      );
+    };
+
+    mapInstance.on('click', clickEvent);
+    return () => {
+      initialLayers.forEach(({ id, layer }) => {
+        mapInstance.removeLayer(layer(toggleLayer[id] || false));
+      });
+      mapInstance.un('click', clickEvent);
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMapReady, initialLayers]);
 

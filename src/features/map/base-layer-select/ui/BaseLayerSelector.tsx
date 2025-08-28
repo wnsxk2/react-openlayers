@@ -1,5 +1,4 @@
-import { getBaseLayerSource } from '@/entities/map';
-import type { LayerInfo } from '@/entities/map/model/types';
+import { getBaseLayerSource, type LayerInfo } from '@/entities/map';
 import useBaseLayer from '@/features/map/base-layer-select/model/hooks/useBaseLayer';
 import { BaseLayerItem } from '@/features/map/base-layer-select/ui/BaseLayerItem';
 import { colors } from '@/shared/styles';

@@ -31,7 +31,7 @@ export function LayerToggleButton({
 }
 
 const containerStyles = css`
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   cursor: pointer;

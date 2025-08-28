@@ -1,4 +1,4 @@
-import type { LayerInfo } from '@/entities/map/model/types';
+import type { LayerInfo } from '@/entities/map';
 import type { Map } from 'ol';
 import { useEffect, useState } from 'react';
 
