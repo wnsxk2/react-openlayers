@@ -4,3 +4,4 @@ export * from './model/types';
 export * from './api/polygon';
 export * from './lib/source';
 export { OverlayProvider } from './ui/OverlayProvider';
+export { getBaseLayerSource } from './lib/source';

@@ -1,4 +1,5 @@
 import { BaseLayerSelector } from '@/features/map/base-layer-select';
+import { OverviewMapControl } from '@/features/map/overview-map';
 import { ZoomControl } from '@/features/map/zoom-control';
 import type { Map } from 'ol';
 
@@ -16,6 +17,7 @@ export const MapControls = ({ mapInstance, isMapReady }: MapControlsProps) => {
         initialLayer={'normal'}
       />
       <ZoomControl mapInstance={mapInstance} isMapReady={isMapReady} />
+      <OverviewMapControl mapInstance={mapInstance} isMapReady={isMapReady} />
     </>
   );
 };
