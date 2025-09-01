@@ -5,3 +5,4 @@ export * from './api/polygon';
 export * from './api/point';
 export * from './lib/source';
 export { OverlayProvider } from './ui/OverlayProvider';
+export { getBaseLayerSource } from './lib/source';
