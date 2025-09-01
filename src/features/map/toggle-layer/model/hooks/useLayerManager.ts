@@ -2,6 +2,7 @@ import type { LayerInfo } from '@/entities/map';
 import type { Map } from 'ol';
 import { useEffect, useMemo, useState } from 'react';
 import { useGetPolygon } from '@/features/map/toggle-layer/api/useGetPolygon';
+import { useGetPoint } from '../../api/useGetPoint';
 import { LayerFactory } from '@/features/map/toggle-layer/model/services/layerFactory';
 
 interface UseLayerManagerProps {
@@ -20,6 +21,7 @@ export function useLayerManager({
 }: UseLayerManagerProps) {
   // 폴리곤 데이터 로드
   const { data: polygon } = useGetPolygon();
+  const { data: point } = useGetPoint();
 
   // 기본 레이어 생성
   const baseLayers = useMemo(
@@ -29,6 +31,16 @@ export function useLayerManager({
 
   // 현재 활성 레이어 관리
   const [currentLayers, setCurrentLayers] = useState<LayerInfo[]>(baseLayers);
+
+  // 지형고도 레이어 추가
+  useEffect(() => {
+    const elevationLayer = LayerFactory.createElevationLayer();
+    setCurrentLayers((prev) => {
+      const hasElevationLayer = prev.some((layer) => layer.id === 'elevation');
+      if (hasElevationLayer) return prev;
+      return [...prev, elevationLayer];
+    });
+  }, []);
 
   // 폴리곤 데이터가 로드되면 레이어 추가
   useEffect(() => {
@@ -43,6 +55,17 @@ export function useLayerManager({
       });
     }
   }, [polygon]);
+
+  // 포인트 데이터 로드 후 레이어 추가
+  useEffect(() => {
+    if (point) {
+      const pointLayer = LayerFactory.createPointLayer(point);
+      setCurrentLayers((prev) => {
+        if (prev.some((l) => l.id === 'point')) return prev;
+        return [pointLayer, ...prev];
+      });
+    }
+  }, [point]);
 
   const initialToggleState = useMemo(
     () => currentLayers.reduce((acc, { id }) => ({ ...acc, [id]: false }), {}),

@@ -1,5 +1,6 @@
 import { OverlayProvider, useMap, useTooltipOverlay } from '@/entities/map';
 import { PolygonTooltip } from '@/features/map/polygon-tooltip';
+import { PointTooltip } from '@/features/map/point-tooltip';
 import { MapToggleMenu } from '@/features/map/toggle-menu';
 import { colors } from '@/shared/styles';
 import { MapControls } from '@/widgets/map/map-controls';
@@ -21,8 +22,12 @@ export default function MapPage() {
     zoom: DEFAULT_ZOOM,
     center: DEFAULT_CENTER,
   });
-  const { tooltipRef } = useTooltipOverlay({
+  const { tooltipRef: polygonTooltipRef } = useTooltipOverlay({
     id: 'polygon',
+    mapInstance,
+  });
+  const { tooltipRef: pointTooltipRef } = useTooltipOverlay({
+    id: 'point',
     mapInstance,
   });
 
@@ -38,7 +43,8 @@ export default function MapPage() {
         <main css={mainStyles({ isOpen: isSiderBarOpen })}>
           <section css={mapContainerStyles} ref={mapRef}>
             <MapControls mapInstance={mapInstance} isMapReady={isMapReady} />
-            <PolygonTooltip ref={tooltipRef} />
+            <PolygonTooltip ref={polygonTooltipRef} />
+            <PointTooltip ref={pointTooltipRef} />
           </section>
 
           <MapToggleMenu

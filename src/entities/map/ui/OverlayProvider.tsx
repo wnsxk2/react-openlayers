@@ -1,4 +1,4 @@
-import type { PolygonInfo } from '@/entities/map';
+import type { PolygonInfo, PointInfo } from '@/entities/map';
 import {
   createContext,
   useContext,
@@ -7,20 +7,28 @@ import {
 } from 'react';
 
 interface OverlayContextPops {
+  // PolygonInfo 속성
   name?: string;
   description?: string;
   category?: string;
   area?: number;
   center?: number[];
-  handleProperties: (properties: PolygonInfo) => void;
+  // PointInfo 속성
+  locationName?: string;
+  type?: '포인트';
+  region?: string;
+  importance?: '높음' | '보통' | '낮음';
+  latitude?: number;
+  longitude?: number;
+  handleProperties: (properties: PolygonInfo | PointInfo) => void;
 }
 
 const OverlayContext = createContext<OverlayContextPops | null>(null);
 
 export const OverlayProvider = ({ children }: PropsWithChildren) => {
-  const [properties, setProperties] = useState<PolygonInfo>();
+  const [properties, setProperties] = useState<PolygonInfo | PointInfo>();
 
-  const handleProperties = (properties: PolygonInfo) => {
+  const handleProperties = (properties: PolygonInfo | PointInfo) => {
     setProperties(properties);
   };
 

@@ -13,6 +13,11 @@ export type GeoJson<T, U> = {
   features: Feature<T, U>[];
 };
 
+export type Geometry<T> = {
+  geom: string;
+  properties: T;
+};
+
 export type Feature<T, U> = {
   type: string;
   geometry: T;
@@ -30,4 +35,18 @@ export type PolygonInfo = {
   category: string;
   area: number;
   center: number[];
+};
+
+export type Point = {
+  type: FeatureType;
+  coordinates: number[];
+};
+
+export type PointInfo = {
+  locationName: string;
+  type: '포인트';
+  region: string;
+  importance: '높음' | '보통' | '낮음';
+  latitude: number;
+  longitude: number;
 };

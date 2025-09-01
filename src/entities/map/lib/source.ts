@@ -41,3 +41,13 @@ export const getDarkRasterSource = () => {
     crossOrigin: 'anonymous',
   });
 };
+
+// 지형고도 래스터 레이어
+export const getElevationRasterSource = () => {
+  return new XYZ({
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
+    attributions: '© Esri, USGS, NOAA',
+    maxZoom: 13,
+    crossOrigin: 'anonymous',
+  });
+};
