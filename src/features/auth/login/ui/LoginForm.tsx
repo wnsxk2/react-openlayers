@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
+import { useLogin } from '@/entities/auth/model/queries/useLogin';
 
 interface LoginFormProps {
   id: string;
@@ -13,7 +14,6 @@ interface LoginFormProps {
   error: string | null;
   onIdChange: (id: string) => void;
   onPasswordChange: (password: string) => void;
-  onLoginSubmit: (id: string, password: string) => void;
   onSignUp: () => void;
 }
 
@@ -24,59 +24,61 @@ const LoginFormHeader = memo(() => (
   </>
 ));
 
-const LoginInputSection = memo(({
-  id,
-  password,
-  inputErrors,
-  loading,
-  onIdChange,
-  onPasswordChange,
-  onSignUp,
-}: {
-  id: string;
-  password: string;
-  inputErrors: { id?: string; password?: string };
-  loading: boolean;
-  onIdChange: (id: string) => void;
-  onPasswordChange: (password: string) => void;
-  onSignUp: () => void;
-}) => (
-  <>
-    <input
-      type='text'
-      value={id}
-      onChange={(e) => onIdChange(e.target.value)}
-      css={[infoInputField, inputErrors.id && errorField]}
-      placeholder='아이디를 입력하세요.'
-    />
-    {inputErrors.id && <span css={errorMessage}>{inputErrors.id}</span>}
+const LoginInputSection = memo(
+  ({
+    id,
+    password,
+    inputErrors,
+    loading,
+    onIdChange,
+    onPasswordChange,
+    onSignUp,
+  }: {
+    id: string;
+    password: string;
+    inputErrors: { id?: string; password?: string };
+    loading: boolean;
+    onIdChange: (id: string) => void;
+    onPasswordChange: (password: string) => void;
+    onSignUp: () => void;
+  }) => (
+    <>
+      <input
+        type='text'
+        value={id}
+        onChange={(e) => onIdChange(e.target.value)}
+        css={[infoInputField, inputErrors.id && errorField]}
+        placeholder='아이디를 입력하세요.'
+      />
+      {inputErrors.id && <span css={errorMessage}>{inputErrors.id}</span>}
 
-    <input
-      type='password'
-      value={password}
-      onChange={(e) => onPasswordChange(e.target.value)}
-      css={[infoInputField, inputErrors.password && errorField]}
-      placeholder='비밀번호를 입력하세요.'
-    />
-    {inputErrors.password && (
-      <span css={errorMessage}>{inputErrors.password}</span>
-    )}
+      <input
+        type='password'
+        value={password}
+        onChange={(e) => onPasswordChange(e.target.value)}
+        css={[infoInputField, inputErrors.password && errorField]}
+        placeholder='비밀번호를 입력하세요.'
+      />
+      {inputErrors.password && (
+        <span css={errorMessage}>{inputErrors.password}</span>
+      )}
 
-    <div css={loginButtonContainer}>
-      <button type='submit' disabled={loading} css={loginButton}>
-        {loading ? '로그인 중...' : '로그인'}
-      </button>
-      <button
-        type='button'
-        onClick={onSignUp}
-        disabled={loading}
-        css={signUpButton}
-      >
-        회원가입
-      </button>
-    </div>
-  </>
-));
+      <div css={loginButtonContainer}>
+        <button type='submit' disabled={loading} css={loginButton}>
+          {loading ? '로그인 중...' : '로그인'}
+        </button>
+        <button
+          type='button'
+          onClick={onSignUp}
+          disabled={loading}
+          css={signUpButton}
+        >
+          회원가입
+        </button>
+      </div>
+    </>
+  )
+);
 
 const BackLink = memo(() => (
   <Link to='/' css={loginCancelText}>
@@ -84,7 +86,7 @@ const BackLink = memo(() => (
   </Link>
 ));
 
-const ServerError = memo(({ error }: { error: string | null }) => 
+const ServerError = memo(({ error }: { error?: string }) =>
   error ? <div css={serverErrorMessage}>{error}</div> : null
 );
 
@@ -92,34 +94,34 @@ export function LoginForm({
   id,
   password,
   inputErrors,
-  loading,
-  error,
   onIdChange,
   onPasswordChange,
-  onLoginSubmit,
   onSignUp,
 }: LoginFormProps) {
-  const onSubmit = useCallback((e: React.FormEvent) => {
+  const login = useLogin();
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLoginSubmit(id, password);
-  }, [id, password, onLoginSubmit]);
-
+    if (login.isError) {
+      login.reset();
+    }
+    login.mutate({ id, password });
+  };
   return (
     <form onSubmit={onSubmit} css={formContainer}>
       <LoginFormHeader />
-      
+
       <LoginInputSection
         id={id}
         password={password}
         inputErrors={inputErrors}
-        loading={loading}
+        loading={login.isPending}
         onIdChange={onIdChange}
         onPasswordChange={onPasswordChange}
         onSignUp={onSignUp}
       />
 
       <BackLink />
-      <ServerError error={error} />
+      {login.isError && <ServerError error={login.errorMsg} />}
     </form>
   );
 }

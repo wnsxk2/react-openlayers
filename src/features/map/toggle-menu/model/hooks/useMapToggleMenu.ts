@@ -1,7 +1,9 @@
+import { useAuthContext } from '@/entities/auth';
 import { useNavigate } from 'react-router-dom';
 
 export const useMapToggleMenu = () => {
-  const navigate = useNavigate();
+  const nav = useNavigate();
+  const { isLoggedIn, logout } = useAuthContext();
   // TODO: entities에 로직 구현
   //   const { user, login, logout } = useUser();
   //   const { theme, toggleTheme } = useTheme();
@@ -21,9 +23,13 @@ export const useMapToggleMenu = () => {
 
   const menuItems = [
     {
-      label: '로그인',
+      label: isLoggedIn ? '로그아웃' : '로그인',
       onClick: () => {
-        navigate('/login');
+        if (isLoggedIn) {
+          logout();
+        } else {
+          nav('/login');
+        }
       },
     },
     {
