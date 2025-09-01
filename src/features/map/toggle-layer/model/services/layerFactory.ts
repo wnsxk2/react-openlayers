@@ -1,9 +1,9 @@
 import {
-  getDarkRasterSource,
   getElevationRasterSource,
   type GetPolygonResponse,
   type GetPointResponse,
   type LayerInfo,
+  getRasterSource,
 } from '@/entities/map';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
@@ -20,7 +20,7 @@ export class LayerFactory {
       label: '다크 레이어',
       layer: (visible: boolean) =>
         new TileLayer({
-          source: getDarkRasterSource(),
+          source: getRasterSource('dark'),
           visible,
           opacity: 0.7,
           properties: {
@@ -121,6 +121,23 @@ export class LayerFactory {
           zIndex: 2,
           properties: {
             id: 'point',
+            type: 'toggle',
+          },
+        }),
+    };
+  }
+
+  static createLightLayer(): LayerInfo {
+    return {
+      id: 'light',
+      label: '라이트 레이어',
+      layer: (visible: boolean) =>
+        new TileLayer({
+          source: getRasterSource('light'),
+          visible,
+          opacity: 0.7,
+          properties: {
+            id: 'light',
             type: 'toggle',
           },
         }),
