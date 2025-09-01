@@ -39,11 +39,11 @@ export const useTooltipOverlay = ({
       const hasFeatureAtPixel = mapInstance.hasFeatureAtPixel(e.pixel, {
         layerFilter: (layer) => {
           const layerId = layer.get('id');
-          return layerId === 'polygon' && layer.getVisible();
+          return (layerId === 'polygon' || layerId === 'point') && layer.getVisible();
         },
       });
 
-      // polygon feature가 없는 곳을 클릭한 경우 overlay 숨기기
+      // polygon이나 point feature가 없는 곳을 클릭한 경우 overlay 숨기기
       if (!hasFeatureAtPixel) {
         hideOverlay();
       }
