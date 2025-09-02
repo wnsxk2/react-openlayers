@@ -33,13 +33,23 @@ export const getBaseLayerSource = (mapType: string) => {
 };
 
 // 다크 레스터 레이어
-export const getDarkRasterSource = () => {
-  return new XYZ({
-    url: 'https://cartodb-basemaps-{a-d}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
-    attributions: '© CartoDB, © OpenStreetMap contributors',
-    maxZoom: 19,
-    crossOrigin: 'anonymous',
-  });
+export const getRasterSource = (mapType: string) => {
+  switch (mapType) {
+    case 'dark':
+      return new XYZ({
+        url: 'https://cartodb-basemaps-{a-d}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
+        attributions: '© CartoDB, © OpenStreetMap contributors',
+        maxZoom: 19,
+        crossOrigin: 'anonymous',
+      });
+    case 'light':
+      return new XYZ({
+        url: 'https://cartodb-basemaps-{a-d}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        attributions: '© CartoDB, © OpenStreetMap contributors',
+        maxZoom: 19,
+        crossOrigin: 'anonymous',
+      });
+  }
 };
 
 // 지형고도 래스터 레이어

@@ -25,7 +25,11 @@ export function useLayerManager({
 
   // 기본 레이어 생성
   const baseLayers = useMemo(
-    () => defaultLayers || [LayerFactory.createDarkLayer()],
+    () =>
+      defaultLayers || [
+        LayerFactory.createDarkLayer(),
+        LayerFactory.createLightLayer(),
+      ],
     [defaultLayers]
   );
 
