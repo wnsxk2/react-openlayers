@@ -9,7 +9,6 @@ export default function LoginPage() {
     inputErrors,
     loading,
     error,
-    handleLoginSubmit,
     handleSignUp,
     handleIdChange,
     handlePasswordChange,
@@ -25,7 +24,6 @@ export default function LoginPage() {
         error={error}
         onIdChange={handleIdChange}
         onPasswordChange={handlePasswordChange}
-        onLoginSubmit={handleLoginSubmit}
         onSignUp={handleSignUp}
       />
     </div>

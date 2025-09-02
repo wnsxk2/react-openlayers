@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Lazy load pages
 const Home = lazy(() => import('@/pages/Home'));
-const MapPage = lazy(() => import('@/pages/Map'));
+const MapPage = lazy(() => import('@/pages/map'));
 const NotFound = lazy(() => import('@/pages/not-found'));
-const LoginPage = lazy(() => import('@/pages/Login'));
+const LoginPage = lazy(() => import('@/pages/login'));
 const SignUpPage = lazy(() => import('@/pages/sign-up'));
 
 const router = createBrowserRouter([
