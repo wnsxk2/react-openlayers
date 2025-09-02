@@ -13,6 +13,7 @@ import Style from 'ol/style/Style';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import CircleStyle from 'ol/style/Circle';
+import type { GetBookmarksResponse } from '@/entities/map/api/bookmark';
 export class LayerFactory {
   static createDarkLayer(): LayerInfo {
     return {
@@ -139,6 +140,41 @@ export class LayerFactory {
           properties: {
             id: 'light',
             type: 'toggle',
+          },
+        }),
+    };
+  }
+
+  static createBookmarkLayer(data: GetBookmarksResponse): LayerInfo {
+    return {
+      id: 'bookmark',
+      label: '북마크 레이어',
+      layer: (visible: boolean) =>
+        new VectorLayer({
+          source: new VectorSource({
+            features: new GeoJSON().readFeatures(data, {
+              dataProjection: 'EPSG:4326',
+              featureProjection: 'EPSG:3857',
+            }),
+          }),
+          style: new Style({
+            image: new CircleStyle({
+              radius: 8,
+              fill: new Fill({
+                color: '#ae00ff',
+              }),
+              stroke: new Stroke({
+                color: '#ffffff',
+                width: 2,
+              }),
+            }),
+          }),
+          visible,
+          opacity: 0.7,
+          zIndex: 1,
+          properties: {
+            id: 'bookmark',
+            type: 'bookmark',
           },
         }),
     };

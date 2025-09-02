@@ -352,3 +352,14 @@ export const polygonList = [
     },
   },
 ];
+
+export const bookmarkList = [
+  {
+    name: '종로구',
+    center: [126.977969, 37.57295],
+    location: {
+      type: 'Point',
+      coordinates: [126.977969, 37.57295],
+    },
+  },
+];
