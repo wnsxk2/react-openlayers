@@ -1,4 +1,3 @@
-import type { LayerInfo } from '@/entities/map';
 import { BookmarkItem } from '@/features/map/place-bookmark/ui/BookmarkItem';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
@@ -11,21 +10,19 @@ import { useGetBookmark } from '@/features/map/place-bookmark/api/useGetBookmark
 import { LayerFactory } from '@/features/map/toggle-layer';
 import { usePostBookmark } from '@/features/map/place-bookmark/api/usePostBookmark';
 
-interface BookmarkPannelProps {
+interface BookmarkPanelProps {
   mapInstance: Map | null;
   isMapReady: boolean;
-  defaultLayers?: LayerInfo[];
   bookmarkMode: boolean;
   onChangeMode: (value: boolean) => void;
 }
 
-export const BookmarkPannel = ({
+export const BookmarkPanel = ({
   mapInstance,
   isMapReady,
-  defaultLayers,
   bookmarkMode: isBookmarkMode,
   onChangeMode: setBookmarkMode,
-}: BookmarkPannelProps) => {
+}: BookmarkPanelProps) => {
   const { data: bookmarks, bookmarkList } = useGetBookmark();
   const createBookmark = usePostBookmark();
 
@@ -75,7 +72,7 @@ export const BookmarkPannel = ({
     return () => {
       mapInstance.un('click', handleClick);
     };
-  }, [mapInstance, isMapReady, isBookmarkMode]);
+  }, [mapInstance, isMapReady, isBookmarkMode, handleClick]);
 
   const bookmarkMode = () => {
     if (!mapInstance || !isMapReady) return;

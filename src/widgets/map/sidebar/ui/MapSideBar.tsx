@@ -1,5 +1,5 @@
 import { useAuthContext } from '@/entities/auth';
-import { BookmarkPannel } from '@/features/map/place-bookmark/ui/BookmarkPannel';
+import { BookmarkPanel } from '@/features/map/place-bookmark';
 import { ToggleLayerPanel } from '@/features/map/toggle-layer';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
@@ -30,7 +30,7 @@ export const MapSideBar = ({
         disabled={isBookmarkMode}
       />
       {isLoggedIn && (
-        <BookmarkPannel
+        <BookmarkPanel
           mapInstance={mapInstance}
           isMapReady={isMapReady}
           bookmarkMode={isBookmarkMode}
