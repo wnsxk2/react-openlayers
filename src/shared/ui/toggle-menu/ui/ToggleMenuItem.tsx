@@ -18,6 +18,7 @@ const itemStyles = css`
   width: 100%;
   text-align: start;
   padding-left: 8px;
+  color: ${colors.textPrimary};
   border-bottom: 1px solid ${colors.borderLight};
   &:last-child {
     border-bottom: none;

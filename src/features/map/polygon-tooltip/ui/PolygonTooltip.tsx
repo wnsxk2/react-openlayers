@@ -33,6 +33,7 @@ const nameStyles = css`
   padding: 2px 6px;
   color: ${colors.white};
   background-color: ${colors.buttonFocus};
+  transition: background-color 0.2s ease-in;
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;

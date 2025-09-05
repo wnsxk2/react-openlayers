@@ -4,7 +4,8 @@ import { css } from '@emotion/react';
 import { forwardRef } from 'react';
 
 export const PointTooltip = forwardRef<HTMLDivElement>((_, ref) => {
-  const { locationName, type, region, importance, latitude, longitude } = useOverlay();
+  const { locationName, type, region, importance, latitude, longitude } =
+    useOverlay();
   return (
     <div ref={ref} css={tooltipOverlayStyles}>
       <span css={nameStyles}>{locationName}</span>
@@ -28,6 +29,7 @@ const tooltipOverlayStyles = css`
   border-radius: 8px;
   box-shadow: 2px 0 8px ${colors.shadowLight};
   background-color: ${colors.backgroundLight};
+  transition: background-color 0.2s ease-in;
 `;
 
 const nameStyles = css`

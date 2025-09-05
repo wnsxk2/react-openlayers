@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { colors } from '@/shared/styles';
 
 interface TextInputProps {
   value: string;
@@ -22,14 +23,15 @@ const infoInputField = css`
   width: 75%;
   padding: 10px 14px;
   margin: 0 auto 12px 25px;
-  border: 2px solid #e1e5e9;
+  border: 2px solid ${colors.borderLight};
   border-radius: 12px;
   font-size: 16px;
-  background-color: #f8f9fa;
+  color: ${colors.textPrimary};
+  background-color: ${colors.inputBackground};
   transition: all 0.3s ease;
 
   &::placeholder {
-    color: #666666;
+    color: ${colors.textSecondary};
     opacity: 0.8;
   }
 `;

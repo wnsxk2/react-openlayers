@@ -58,6 +58,7 @@ const sidebarStyles = css`
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
   box-shadow: 2px 0 8px ${colors.shadowLight};
+  transition: background-color 0.2s ease-in;
 `;
 
 const hideSidebarStyles = css`
@@ -83,4 +84,5 @@ const toggleButtonStyles = css`
   transform: translate(280px, -50%);
   transition: transform 0.3s ease-in-out, box-shadow 0.2s ease;
   box-shadow: 0 2px 8px ${colors.shadowLight};
+  transition: background-color 0.2s ease-in;
 `;

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
+import { colors } from '@/shared/styles';
 import { useIdCheck } from '@/features/auth/sign-up/model/hooks/useIdCheck';
 import { usePasswordCheck } from '@/features/auth/sign-up/model/hooks/usePasswordCheck';
 import { useEmailCheck } from '@/features/auth/sign-up/model/hooks/useEmailCheck';
@@ -113,7 +114,7 @@ const formContainer = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #e9e9e9;
+  background-color: ${colors.formBackground};
   border-radius: 20px;
   width: 560px;
   padding-top: 30px;
@@ -123,20 +124,20 @@ const signUpText = css`
   text-align: center;
   font-size: 32px;
   font-weight: bold;
-  color: #555555;
+  color: ${colors.textPrimary};
 `;
 
 const signUpSubText = css`
   text-align: center;
   font-size: 12px;
-  color: #666666;
+  color: ${colors.textSecondary};
   margin-bottom: 30px;
 `;
 
 const signUpCancelText = css`
   text-align: center;
   font-size: 14px;
-  color: #666666;
+  color: ${colors.textSecondary};
   margin: 5px 0 20px 0;
   text-decoration: underline;
   cursor: pointer;

@@ -22,6 +22,7 @@ const buttonStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${colors.textPrimary};
 
   &:first-of-type {
     border-top-left-radius: 8px;
