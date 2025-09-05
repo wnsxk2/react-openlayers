@@ -97,8 +97,9 @@ const baseLayerSelector = css`
   padding: 5px;
   gap: 5px;
   position: absolute;
-  background-color: ${colors.white};
+  background-color: ${colors.backgroundLight};
   border: 1px solid ${colors.borderLight};
   border-radius: 8px;
   box-shadow: 2px 0 8px ${colors.shadowLight};
+  transition: background-color 0.2s ease-in;
 `;

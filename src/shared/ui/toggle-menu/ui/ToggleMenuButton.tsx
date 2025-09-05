@@ -26,7 +26,8 @@ const buttonStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.white};
+  color: ${colors.textPrimary};
+  background-color: ${colors.backgroundLight};
   border: 1px solid ${colors.borderLight};
   border-radius: 50%;
   box-shadow: 2px 0 8px ${colors.shadowLight};

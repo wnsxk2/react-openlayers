@@ -28,6 +28,7 @@ const baseLayerSelectBtn = ({ isActive }: { isActive: boolean }) => css`
   font-size: 14px;
   border-radius: 4px;
   padding: 8px 16px;
+  color: ${colors.textPrimary};
   transition: background-color 0.2s ease-in;
 
   ${!isActive &&

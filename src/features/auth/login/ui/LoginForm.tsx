@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { memo } from 'react';
 import { useLogin } from '@/entities/auth/model/queries/useLogin';
+import { colors } from '@/shared/styles';
 
 interface LoginFormProps {
   id: string;
@@ -130,7 +131,7 @@ const formContainer = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #e9e9e9;
+  background-color: ${colors.formBackground};
   border-radius: 20px;
   width: 450px;
   padding-top: 30px;
@@ -140,13 +141,13 @@ const loginText = css`
   text-align: center;
   font-size: 32px;
   font-weight: bold;
-  color: #555555;
+  color: ${colors.textPrimary};
 `;
 
 const loginSubText = css`
   text-align: center;
   font-size: 12px;
-  color: #666666;
+  color: ${colors.textSecondary};
   margin-bottom: 30px;
 `;
 
@@ -154,24 +155,25 @@ const infoInputField = css`
   width: 80%;
   padding: 10px 14px;
   margin: 0 auto 12px auto;
-  border: 2px solid #e1e5e9;
+  border: 2px solid ${colors.borderLight};
   border-radius: 12px;
   font-size: 16px;
-  background-color: #f8f9fa;
+  color: ${colors.textPrimary};
+  background-color: ${colors.inputBackground};
   transition: all 0.3s ease;
   &::placeholder {
-    color: #666666;
+    color: ${colors.textSecondary};
     opacity: 0.8;
   }
 `;
 
 const errorField = css`
-  border-color: #dc3545 !important;
+  border-color: ${colors.errorBorder} !important;
   box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
 `;
 
 const errorMessage = css`
-  color: #dc3545;
+  color: ${colors.errorText};
   font-size: 12px;
   margin: 0 auto 16px auto;
   width: 80%;
@@ -188,15 +190,17 @@ const loginButtonContainer = css`
 
 const loginButton = css`
   margin-right: 25px;
-  background-color: lightblue;
-  border: 7px solid lightblue;
+  background-color: ${colors.buttonPrimary};
+  border: 7px solid ${colors.buttonPrimary};
+  color: ${colors.black};
   width: 70px;
   border-radius: 5px;
 `;
 
 const signUpButton = css`
-  background-color: lightpink;
-  border: 7px solid lightpink;
+  background-color: ${colors.buttonSecondary};
+  border: 7px solid ${colors.buttonSecondary};
+  color: ${colors.black};
   width: 70px;
   border-radius: 5px;
 `;
@@ -204,14 +208,14 @@ const signUpButton = css`
 const loginCancelText = css`
   text-align: center;
   font-size: 14px;
-  color: #666666;
+  color: ${colors.textSecondary};
   margin-bottom: 20px;
   text-decoration: underline;
   cursor: pointer;
 `;
 
 const serverErrorMessage = css`
-  color: #721c24;
+  color: ${colors.errorText};
   text-align: center;
   font-size: 14px;
   margin-left: auto;

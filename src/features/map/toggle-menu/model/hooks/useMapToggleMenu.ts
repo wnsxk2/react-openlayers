@@ -1,9 +1,11 @@
 import { useAuthContext } from '@/entities/auth';
+import { useThemeContext } from '@/shared/lib/theme';
 import { useNavigate } from 'react-router-dom';
 
 export const useMapToggleMenu = () => {
   const nav = useNavigate();
   const { isLoggedIn, logout } = useAuthContext();
+  const { theme, toggleTheme } = useThemeContext();
   // TODO: entities에 로직 구현
   //   const { user, login, logout } = useUser();
   //   const { theme, toggleTheme } = useTheme();
@@ -33,10 +35,11 @@ export const useMapToggleMenu = () => {
       },
     },
     {
-      label: '다크모드',
-      onClick: () => {
-        console.log('themte 상태 업데이트');
-      },
+      label: theme === 'dark' ? '라이트모드' : '다크모드',
+      onClick: toggleTheme,
+      // onClick: () => {
+      //   console.log('themte 상태 업데이트');
+      // },
     },
     {
       label: '영어',

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { colors } from '@/shared/styles';
 
 interface SignUpButtonProps {
   loading: boolean;
@@ -19,8 +20,9 @@ export function SignUpButton({ loading, onClick }: SignUpButtonProps) {
 }
 
 const signUpButton = css`
-  background-color: lightblue;
-  border: 7px solid lightblue;
+  background-color: ${colors.buttonPrimary};
+  border: 7px solid ${colors.buttonPrimary};
+  color: ${colors.black};
   min-width: 70px;
   padding-left: 10px;
   padding-right: 10px;

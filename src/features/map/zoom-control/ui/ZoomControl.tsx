@@ -64,10 +64,11 @@ const sliderContainer = css`
   right: 15px;
   width: 220px;
   height: 40px;
-  background-color: ${colors.white};
+  background-color: ${colors.backgroundLight};
   border: 1px solid ${colors.borderLight};
   border-radius: 8px;
   box-shadow: 2px 0 8px ${colors.shadowLight};
   z-index: 100;
   transform: translate(90px, -90px) rotateZ(-90deg);
+  transition: background-color 0.2s ease-in;
 `;

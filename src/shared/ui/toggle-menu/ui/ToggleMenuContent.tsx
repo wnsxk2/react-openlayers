@@ -20,7 +20,7 @@ const contentStyles = css`
   align-items: start;
   width: 160px;
   margin-top: 6px;
-  background-color: ${colors.white};
+  background-color: ${colors.backgroundLight};
   border-radius: 8px;
   border: 1px solid ${colors.borderLight};
   box-shadow: 0 2px 8px ${colors.shadowLight};
