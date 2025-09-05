@@ -23,6 +23,7 @@
   /* Background Colors */
   --color-background-light: #ffffff;
   --color-background-dark: #1a1a1a;
+  --color-body-background: #ffffff;
   --color-form-background: #e9e9e9;
   --color-input-background: #f8f9fa;
 
@@ -62,7 +63,7 @@ body {
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', sans-serif;
   font-size: 16px;
-  background-color: var(--color-background-light);
+  background-color: var(--color-body-background);
   color: var(--color-text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -100,6 +101,7 @@ img {
   /* Background Colors */
   --color-background-light: #1a1a1a;
   --color-background-dark: #0f0f0f;
+  --color-body-background: #0f0f0f;
   --color-form-background: #2c2c2c;
   --color-input-background: #383838;
 

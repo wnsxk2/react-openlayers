@@ -22,6 +22,7 @@ export const colors = {
   // Background Colors
   backgroundLight: 'var(--color-background-light)',
   backgroundDark: 'var(--color-background-dark)',
+  bodyBackground: 'var(--color-body-background)',
   formBackground: 'var(--color-form-background)',
   inputBackground: 'var(--color-input-background)',
 
