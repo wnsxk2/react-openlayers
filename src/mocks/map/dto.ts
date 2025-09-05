@@ -2,6 +2,7 @@ import type {
   Feature,
   GeoJson,
   Geometry,
+  Point,
   PointInfo,
   Polygon,
   PolygonInfo,
@@ -38,6 +39,40 @@ export function createPolygonListResponse(
       type: 'FeatureCollection',
       features: data,
     },
+  };
+  return HttpResponse.json(response);
+}
+
+/**
+ * bookmark 요청 데이터 dto
+ */
+
+type BookmarkInfo = Omit<PolygonInfo, 'description' | 'area' | 'category'>;
+
+type BookmarkListResponse = GeoJson<Point, BookmarkInfo>;
+
+export function createBookmarkListResponse(
+  data: Feature<Point, BookmarkInfo>[]
+): Response {
+  const response: ResponseDTO<BookmarkListResponse> = {
+    success: true,
+    data: {
+      type: 'FeatureCollection',
+      features: data,
+    },
+  };
+  return HttpResponse.json(response);
+}
+
+/**
+ * 북마크 저장 dto
+ */
+type BookmarkCreateResponse = {};
+
+export function createBookmarkCreateResponse(): Response {
+  const response: ResponseDTO<BookmarkCreateResponse> = {
+    success: true,
+    data: {},
   };
   return HttpResponse.json(response);
 }

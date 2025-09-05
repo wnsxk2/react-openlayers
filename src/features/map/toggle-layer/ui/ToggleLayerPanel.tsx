@@ -10,12 +10,14 @@ interface ToggleLayerPanelProps {
   mapInstance: Map | null;
   isMapReady: boolean;
   defaultLayers?: LayerInfo[];
+  disabled?: boolean;
 }
 
 export const ToggleLayerPanel = ({
   mapInstance,
   isMapReady,
   defaultLayers,
+  disabled = false,
 }: ToggleLayerPanelProps) => {
   // 레이어 관리 (polygon 데이터 조회 포함)
   const { layers, toggleState, toggleLayer } = useLayerManager({
@@ -33,6 +35,7 @@ export const ToggleLayerPanel = ({
 
   return (
     <div css={contentStyles}>
+      <div css={disabledStyles(disabled)} />
       <h3 css={titleStyles}>레이어 설정</h3>
       {layers.map(({ id, label }) => (
         <LayerToggleButton
@@ -49,8 +52,21 @@ export const ToggleLayerPanel = ({
 
 const contentStyles = css`
   padding: 20px;
-  height: 100%;
   overflow-y: auto;
+  position: relative;
+`;
+
+const disabledStyles = (disabled: boolean) => css`
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: ${disabled ? 'block' : 'none'};
+  background-color: ${colors.backgroundDark};
+  opacity: 0.4;
+  transition: all 0.3s ease-in-out;
 `;
 
 const titleStyles = css`

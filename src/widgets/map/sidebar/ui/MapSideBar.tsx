@@ -1,7 +1,10 @@
+import { useAuthContext } from '@/entities/auth';
+import { BookmarkPanel } from '@/features/map/place-bookmark';
 import { ToggleLayerPanel } from '@/features/map/toggle-layer';
 import { colors } from '@/shared/styles';
 import { css } from '@emotion/react';
 import type { Map } from 'ol';
+import { useState } from 'react';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 
 interface MapSideBarProps {
@@ -17,9 +20,25 @@ export const MapSideBar = ({
   isOpen,
   onToggle,
 }: MapSideBarProps) => {
+  const { isLoggedIn } = useAuthContext();
+  const [isBookmarkMode, setBookmarkMode] = useState(false);
   return (
     <aside css={[sidebarStyles, !isOpen && hideSidebarStyles]}>
-      <ToggleLayerPanel mapInstance={mapInstance} isMapReady={isMapReady} />
+      <ToggleLayerPanel
+        mapInstance={mapInstance}
+        isMapReady={isMapReady}
+        disabled={isBookmarkMode}
+      />
+      {isLoggedIn && (
+        <BookmarkPanel
+          mapInstance={mapInstance}
+          isMapReady={isMapReady}
+          bookmarkMode={isBookmarkMode}
+          onChangeMode={(value: boolean) => {
+            setBookmarkMode(value);
+          }}
+        />
+      )}
       <button css={toggleButtonStyles} onClick={onToggle}>
         {isOpen ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
       </button>
